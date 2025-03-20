@@ -21,7 +21,6 @@ const Header = () => {
   const navigation = [
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Opportunities', href: '/opportunities' },
-    { name: 'Donors', href: '/donors' },
     { name: 'Campaigns', href: '/campaigns' },
     { name: 'Reports', href: '/reports' },
     { name: 'Setup', href: '/setup' },
