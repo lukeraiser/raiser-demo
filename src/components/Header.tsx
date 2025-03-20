@@ -18,8 +18,18 @@ const Header = () => {
     return pathname.startsWith(route);
   };
 
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Opportunities', href: '/opportunities' },
+    { name: 'Donors', href: '/donors' },
+    { name: 'Campaigns', href: '/campaigns' },
+    { name: 'Reports', href: '/reports' },
+    { name: 'Setup', href: '/setup' },
+    { name: 'Learning', href: '/learning' },
+  ];
+
   return (
-    <header className="h-16 bg-gray-200 flex items-center justify-between px-8">
+    <header className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-50">
       {/* Logo */}
       <div className="flex items-center">
         <Link href="/">
@@ -35,56 +45,19 @@ const Header = () => {
 
       {/* Navigation */}
       <nav className="flex items-center space-x-8">
-        <Link 
-          href="/dashboard" 
-          className={`${
-            isActiveRoute('/dashboard')
-              ? 'text-pink-500 font-bold border-b-2 border-pink-500'
-              : 'text-gray-700 hover:text-pink-500'
-          }`}
-        >
-          Dashboard
-        </Link>
-        <Link 
-          href="/setup" 
-          className={`${
-            isActiveRoute('/setup')
-              ? 'text-pink-500 font-bold border-b-2 border-pink-500'
-              : 'text-gray-700 hover:text-pink-500'
-          }`}
-        >
-          Setup
-        </Link>
-        <Link 
-          href="/opportunities" 
-          className={`${
-            isActiveRoute('/opportunities')
-              ? 'text-pink-500 font-bold border-b-2 border-pink-500'
-              : 'text-gray-700 hover:text-pink-500'
-          }`}
-        >
-          Opportunities
-        </Link>
-        <Link 
-          href="/campaigns" 
-          className={`${
-            isActiveRoute('/campaigns')
-              ? 'text-pink-500 font-bold border-b-2 border-pink-500'
-              : 'text-gray-700 hover:text-pink-500'
-          }`}
-        >
-          Campaigns
-        </Link>
-        <Link 
-          href="/reports" 
-          className={`${
-            isActiveRoute('/reports')
-              ? 'text-pink-500 font-bold border-b-2 border-pink-500'
-              : 'text-gray-700 hover:text-pink-500'
-          }`}
-        >
-          Reports
-        </Link>
+        {navigation.map((item) => (
+          <Link 
+            key={item.name}
+            href={item.href} 
+            className={`${
+              isActiveRoute(item.href)
+                ? 'text-pink-500 font-bold border-b-2 border-pink-500'
+                : 'text-gray-700 hover:text-pink-500'
+            }`}
+          >
+            {item.name}
+          </Link>
+        ))}
       </nav>
 
       {/* User Profile */}
@@ -105,6 +78,7 @@ const Header = () => {
                           alt={user.fullName || 'User'}
                           width={40}
                           height={40}
+                          className="w-full h-full object-cover"
                         />
                       ) : (
                         <span className="text-teal-400 font-medium">
