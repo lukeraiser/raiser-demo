@@ -37,6 +37,8 @@ model Grant {
   logo        String?   // URL to logo image
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  createdBy   String    // Clerk user ID
+  donor       String    // Name of the donor organization
 }
 
 model Metric {

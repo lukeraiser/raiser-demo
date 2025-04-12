@@ -8,7 +8,10 @@ CREATE TABLE "Project" (
     "imageUrl" TEXT,
     "status" TEXT NOT NULL DEFAULT 'active',
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "updatedAt" DATETIME NOT NULL,
+    "createdBy" TEXT NOT NULL,
+    "charityId" TEXT NOT NULL,
+    CONSTRAINT "Project_charityId_fkey" FOREIGN KEY ("charityId") REFERENCES "Charity" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -23,7 +26,9 @@ CREATE TABLE "Grant" (
     "applicationDetails" TEXT,
     "logo" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "updatedAt" DATETIME NOT NULL,
+    "createdBy" TEXT NOT NULL,
+    "donor" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -37,6 +42,15 @@ CREATE TABLE "Metric" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     CONSTRAINT "Metric_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Charity" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
