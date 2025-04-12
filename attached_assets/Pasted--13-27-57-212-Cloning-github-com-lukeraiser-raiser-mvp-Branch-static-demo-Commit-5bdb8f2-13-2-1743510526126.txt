@@ -1,0 +1,38 @@
+[13:27:57.212] Cloning github.com/lukeraiser/raiser-mvp (Branch: static-demo, Commit: 5bdb8f2)
+[13:27:58.051] Cloning completed: 839.000ms
+[13:27:59.125] Restored build cache from previous deployment (CrMXZxQ877YMG1NkSdNjvd4KTANF)
+[13:27:59.218] Running build in Washington, D.C., USA (East) – iad1
+[13:27:59.711] Running "vercel build"
+[13:28:00.076] Vercel CLI 41.4.1
+[13:28:00.932] Installing dependencies...
+[13:28:02.597] 
+[13:28:02.597] added 4 packages, and changed 1 package in 1s
+[13:28:02.598] 
+[13:28:02.598] 152 packages are looking for funding
+[13:28:02.598]   run `npm fund` for details
+[13:28:02.628] Detected Next.js version: 14.1.0
+[13:28:02.632] Running "npm run build"
+[13:28:02.766] 
+[13:28:02.766] > raiser-mvp@0.1.0 build
+[13:28:02.766] > next build
+[13:28:02.767] 
+[13:28:03.451]    ▲ Next.js 14.1.0
+[13:28:03.452] 
+[13:28:03.521]    Creating an optimized production build ...
+[13:28:16.916]  ✓ Compiled successfully
+[13:28:16.917]    Linting and checking validity of types ...
+[13:28:23.408] Failed to compile.
+[13:28:23.408] 
+[13:28:23.408] ./src/app/setup/page.tsx:417:19
+[13:28:23.408] Type error: Type '(id: string, data: any) => void' is not assignable to type '(updatedProject: Project) => void'.
+[13:28:23.408]   Target signature provides too few arguments. Expected 2 or more, but got 1.
+[13:28:23.408] 
+[13:28:23.409] [0m [90m 415 |[39m                   key[33m=[39m{project[33m.[39mid}[0m
+[13:28:23.409] [0m [90m 416 |[39m                   {[33m...[39mproject}[0m
+[13:28:23.409] [0m[31m[1m>[22m[39m[90m 417 |[39m                   onUpdate[33m=[39m{handleProjectUpdate}[0m
+[13:28:23.409] [0m [90m     |[39m                   [31m[1m^[22m[39m[0m
+[13:28:23.409] [0m [90m 418 |[39m                 [33m/[39m[33m>[39m[0m
+[13:28:23.409] [0m [90m 419 |[39m               ))}[0m
+[13:28:23.409] [0m [90m 420 |[39m             [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m[0m
+[13:28:23.454] Error: Command "npm run build" exited with 1
+[13:28:23.786] 

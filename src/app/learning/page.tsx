@@ -1,280 +1,257 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import Header from '@/components/Header';
 
 interface Course {
   id: string;
   title: string;
   description: string;
-  modules: number;
-  duration: string;
+  category: string;
   progress: number;
-  enrolledCount: number;
-  imageUrl: string;
+  duration: string;
+  image: string;
+  lessons: number;
 }
 
-export default function LearningPage() {
-  const [activeTab, setActiveTab] = useState('courses');
-  const [searchQuery, setSearchQuery] = useState('');
+interface SkillProgress {
+  category: string;
+  score: number;
+  color: string;
+  icon: string;
+}
 
-  const currentCourse = {
-    title: 'Fundraising Essentials',
-    currentModule: 'Module 5: Grant Writing Techniques',
-    progress: 67,
+const skillProgress: SkillProgress[] = [
+  {
+    category: 'Fundraising',
+    score: 85,
+    color: 'bg-blue-500',
+    icon: '💰'
+  },
+  {
+    category: 'Governance',
+    score: 70,
+    color: 'bg-purple-500',
+    icon: '⚖️'
+  },
+  {
+    category: 'Grant Writing',
+    score: 92,
+    color: 'bg-green-500',
+    icon: '✍️'
+  },
+  {
+    category: 'Onboarding',
+    score: 100,
+    color: 'bg-pink-500',
+    icon: '🎯'
+  },
+  {
+    category: 'Marketing',
+    score: 65,
+    color: 'bg-yellow-500',
+    icon: '📢'
+  }
+];
+
+const courses: Course[] = [
+  {
+    id: '1',
+    title: 'Mastering Grant Applications',
+    description: 'Learn the art of writing compelling grant applications',
+    category: 'Grant Writing',
+    progress: 75,
+    duration: '4 hours',
+    image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=300&h=200&fit=crop',
+    lessons: 8
+  },
+  {
+    id: '2',
+    title: 'Nonprofit Governance Essentials',
+    description: 'Understanding board responsibilities and best practices',
+    category: 'Governance',
+    progress: 30,
+    duration: '3 hours',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&h=200&fit=crop',
+    lessons: 6
+  },
+  {
+    id: '3',
+    title: 'Digital Marketing for Nonprofits',
+    description: 'Boost your online presence and reach',
+    category: 'Marketing',
+    progress: 0,
+    duration: '5 hours',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=300&h=200&fit=crop',
+    lessons: 10
+  },
+  {
+    id: '4',
+    title: 'Donor Relations Mastery',
+    description: 'Build and maintain strong donor relationships',
+    category: 'Fundraising',
+    progress: 90,
+    duration: '6 hours',
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=300&h=200&fit=crop',
+    lessons: 12
+  },
+  {
+    id: '5',
+    title: 'Impact Measurement',
+    description: 'Learn to measure and report your social impact',
+    category: 'Governance',
+    progress: 45,
+    duration: '4 hours',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=300&h=200&fit=crop',
+    lessons: 8
+  },
+  {
+    id: '6',
+    title: 'Team Onboarding Guide',
+    description: 'Best practices for new team member onboarding',
+    category: 'Onboarding',
+    progress: 100,
+    duration: '2 hours',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=300&h=200&fit=crop',
+    lessons: 5
+  }
+];
+
+export default function LearningHub() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  const filteredCourses = selectedCategory === 'all' 
+    ? courses 
+    : courses.filter(course => course.category === selectedCategory);
+
+  const categories = ['all', ...new Set(courses.map(course => course.category))];
+
+  const calculateOverallProgress = () => {
+    const completedLessons = courses.reduce((acc, course) => acc + (course.lessons * course.progress / 100), 0);
+    const totalLessons = courses.reduce((acc, course) => acc + course.lessons, 0);
+    return Math.round((completedLessons / totalLessons) * 100);
   };
 
-  const recommendedCourses: Course[] = [
-    {
-      id: '1',
-      title: 'Digital Marketing for Nonprofits',
-      description: '8 modules • 3.5 hours',
-      modules: 8,
-      duration: '3.5 hours',
-      progress: 30,
-      enrolledCount: 132,
-      imageUrl: '/images/digital-marketing.jpg'
-    },
-    {
-      id: '2',
-      title: 'Donor Retention Strategies',
-      description: '6 modules • 2 hours',
-      modules: 6,
-      duration: '2 hours',
-      progress: 0,
-      enrolledCount: 98,
-      imageUrl: '/images/donor-retention.jpg'
-    },
-    {
-      id: '3',
-      title: 'Grant Reporting Best Practices',
-      description: '5 modules • 1.5 hours',
-      modules: 5,
-      duration: '1.5 hours',
-      progress: 20,
-      enrolledCount: 76,
-      imageUrl: '/images/grant-reporting.jpg'
-    },
-    {
-      id: '4',
-      title: 'Impact Measurement',
-      description: '7 modules • 2.5 hours',
-      modules: 7,
-      duration: '2.5 hours',
-      progress: 0,
-      enrolledCount: 105,
-      imageUrl: '/images/impact-measurement.jpg'
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
-      <div className="p-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Learning Dashboard</h1>
-        
-        <div className="flex gap-6">
-          {/* Left Sidebar */}
-          <div className="w-64 bg-white rounded-lg shadow-sm p-6">
-            <div className="text-center mb-8">
-              <div className="relative w-32 h-32 mx-auto mb-4">
-                <svg viewBox="0 0 120 120" className="w-full h-full">
-                  <circle cx="60" cy="60" r="54" fill="none" stroke="#e0e0e0" strokeWidth="12"/>
-                  <circle
-                    cx="60"
-                    cy="60"
-                    r="54"
-                    fill="none"
-                    stroke="#FF69B4"
-                    strokeWidth="12"
-                    strokeDasharray={`${currentCourse.progress * 3.39} 339.292`}
-                    transform="rotate(-90 60 60)"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div>
-                    <div className="text-2xl font-bold">{currentCourse.progress}%</div>
-                    <div className="text-sm text-gray-500">Complete</div>
+    <main className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="container mx-auto px-4 py-8 mt-16">
+        {/* User Progress Section */}
+        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Your Learning Progress</h2>
+              <p className="text-gray-600">Overall completion: {calculateOverallProgress()}%</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex -space-x-2">
+                <div className="relative group">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center border-2 border-white">
+                    <span className="text-lg text-white">🏆</span>
+                  </div>
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    Grant Writing Expert
+                  </div>
+                </div>
+                <div className="relative group">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center border-2 border-white">
+                    <span className="text-lg text-white">⭐</span>
+                  </div>
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    Fundraising Master
+                  </div>
+                </div>
+                <div className="relative group">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center border-2 border-white">
+                    <span className="text-lg text-white">🎯</span>
+                  </div>
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    Impact Reporting Pro
                   </div>
                 </div>
               </div>
-              <h3 className="font-bold text-gray-800">{currentCourse.title}</h3>
-              <p className="text-sm text-gray-500">4 of 6 modules completed</p>
-            </div>
-
-            <nav className="space-y-4">
-              <a href="#" className="block px-4 py-2 rounded-lg bg-pink-50 text-gray-800 font-medium">
-                All Courses
-              </a>
-              <a href="#" className="block px-4 py-2 text-gray-600 hover:bg-gray-50">
-                My Progress
-              </a>
-              <a href="#" className="block px-4 py-2 text-gray-600 hover:bg-gray-50">
-                Community
-              </a>
-              <a href="#" className="block px-4 py-2 text-gray-600 hover:bg-gray-50">
-                Resources
-              </a>
-              <a href="#" className="block px-4 py-2 text-gray-600 hover:bg-gray-50">
-                Help & Support
-              </a>
-            </nav>
-
-            <div className="mt-8 p-4 bg-white rounded-lg border border-gray-200">
-              <h4 className="font-bold text-gray-800 mb-2">Need personalized help?</h4>
-              <p className="text-sm text-gray-600 mb-4">Book a 1:1 coaching session</p>
-              <button className="w-full bg-pink-500 text-white rounded-full px-4 py-2 hover:bg-pink-600">
-                Book Session
+              <button className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors">
+                View Certificates
               </button>
             </div>
           </div>
-
-          {/* Main Content */}
-          <div className="flex-1 bg-white rounded-lg shadow-sm">
-            <div className="border-b border-gray-200">
-              <div className="flex items-center px-6">
-                <div className="flex space-x-6">
-                  <button
-                    onClick={() => setActiveTab('courses')}
-                    className={`py-4 px-6 ${
-                      activeTab === 'courses'
-                        ? 'border-b-2 border-pink-500 text-pink-500 font-medium'
-                        : 'text-gray-600'
-                    }`}
-                  >
-                    Courses
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('discussions')}
-                    className={`py-4 px-6 ${
-                      activeTab === 'discussions'
-                        ? 'border-b-2 border-pink-500 text-pink-500 font-medium'
-                        : 'text-gray-600'
-                    }`}
-                  >
-                    Discussions
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('events')}
-                    className={`py-4 px-6 ${
-                      activeTab === 'events'
-                        ? 'border-b-2 border-pink-500 text-pink-500 font-medium'
-                        : 'text-gray-600'
-                    }`}
-                  >
-                    Events
-                  </button>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {skillProgress.map((skill) => (
+              <div key={skill.category} className="bg-gray-50 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-2xl">{skill.icon}</span>
+                  <h3 className="font-medium text-gray-900">{skill.category}</h3>
                 </div>
-                <div className="ml-auto">
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full ${skill.color} transition-all duration-500`}
+                    style={{ width: `${skill.score}%` }}
                   />
                 </div>
+                <p className="text-sm text-gray-600 mt-1">{skill.score}% Mastered</p>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
-            <div className="p-6">
-              <div className="mb-8">
-                <h2 className="text-lg font-bold text-gray-800 mb-4">Continue Learning</h2>
-                <div className="bg-gray-50 rounded-lg p-6 relative">
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-pink-500 rounded-l-lg" />
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold text-gray-800 mb-2">{currentCourse.title}</h3>
-                      <p className="text-gray-600 mb-4">{currentCourse.currentModule}</p>
-                      <div className="w-96 h-2 bg-gray-200 rounded-full">
-                        <div
-                          className="h-2 bg-teal-500 rounded-full"
-                          style={{ width: `${currentCourse.progress}%` }}
-                        />
-                      </div>
-                      <p className="text-sm text-gray-600 mt-2">{currentCourse.progress}% Complete</p>
-                    </div>
-                    <button className="bg-pink-500 text-white rounded-full px-6 py-2 hover:bg-pink-600">
-                      Resume
-                    </button>
+        {/* Course Filters */}
+        <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap ${
+                selectedCategory === category
+                  ? 'bg-pink-600 text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Courses Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCourses.map((course) => (
+            <div key={course.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+              <div className="relative h-40">
+                <img
+                  src={course.image}
+                  alt={course.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-2 right-2 bg-white rounded-full px-2 py-1 text-xs font-medium text-gray-600">
+                  {course.duration}
+                </div>
+              </div>
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium text-pink-600 bg-pink-50 px-2 py-1 rounded-full">
+                    {course.category}
+                  </span>
+                  <span className="text-xs text-gray-500">{course.lessons} lessons</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">{course.title}</h3>
+                <p className="text-sm text-gray-600 mb-3">{course.description}</p>
+                <div className="mt-2">
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-1">
+                    <span>{course.progress}% Complete</span>
+                    <span>{Math.round(course.lessons * course.progress / 100)}/{course.lessons} Lessons</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-pink-600 transition-all duration-500"
+                      style={{ width: `${course.progress}%` }}
+                    />
                   </div>
                 </div>
               </div>
-
-              <div>
-                <h2 className="text-lg font-bold text-gray-800 mb-4">Recommended For You</h2>
-                <div className="grid grid-cols-2 gap-6">
-                  {recommendedCourses.map((course) => (
-                    <div key={course.id} className="border border-gray-200 rounded-lg overflow-hidden">
-                      <div className="h-48 bg-gray-100 relative">
-                        {course.imageUrl && (
-                          <Image
-                            src={course.imageUrl}
-                            alt={course.title}
-                            fill
-                            className="object-cover"
-                          />
-                        )}
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-bold text-gray-800 mb-2">{course.title}</h3>
-                        <p className="text-gray-600 mb-4">{course.description}</p>
-                        <div className="w-full h-2 bg-gray-200 rounded-full mb-2">
-                          <div
-                            className="h-2 bg-teal-500 rounded-full"
-                            style={{ width: `${course.progress}%` }}
-                          />
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">
-                            {course.enrolledCount} learners enrolled
-                          </span>
-                          <button className="text-pink-500 font-medium">
-                            {course.progress > 0 ? 'Resume' : 'Start'}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
-          </div>
-
-          {/* Right Sidebar - Community Chat */}
-          <div className="w-64 bg-white rounded-lg shadow-sm">
-            <div className="p-4 border-b border-gray-200">
-              <h2 className="font-bold text-gray-800">Community Chat</h2>
-            </div>
-            <div className="p-4 space-y-4 h-[calc(100vh-12rem)] overflow-y-auto">
-              <div className="bg-gray-50 rounded-lg p-3">
-                <p className="text-sm text-gray-800 mb-2">
-                  Anyone have tips for corporate sponsorship proposals?
-                </p>
-                <p className="text-xs text-gray-500">Sarah T. • 10m ago</p>
-              </div>
-              <div className="bg-blue-50 rounded-lg p-3 ml-4">
-                <p className="text-sm text-gray-800 mb-2">
-                  Focus on their business goals and how partnership benefits their brand!
-                </p>
-                <p className="text-xs text-gray-500">Mike L. • 5m ago</p>
-              </div>
-              {/* Add more chat messages here */}
-            </div>
-            <div className="p-4 border-t border-gray-200">
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="Type a message..."
-                  className="flex-1 px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
-                />
-                <button className="w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center">
-                  →
-                </button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
+    </main>
   );
 } 

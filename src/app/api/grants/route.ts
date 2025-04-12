@@ -1,63 +1,39 @@
 import { NextResponse } from 'next/server';
-import { getAuth } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
-import type { NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
-    const { userId } = getAuth(req);
-    
-    if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
-
+    console.log('Fetching grants from database...');
     const grants = await prisma.grant.findMany({
       include: {
-        comments: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
+        projects: {
+          include: {
+            metrics: true
+          }
+        }
+      }
     });
+    console.log('Found grants:', grants);
 
     return NextResponse.json(grants);
   } catch (error) {
-    console.error('[GRANTS_GET]', error);
-    return new NextResponse('Internal error', { status: 500 });
+    console.error('Error fetching grants:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch grants' },
+      { status: 500 }
+    );
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const { userId } = getAuth(req);
-    
-    if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
-
-    const body = await req.json();
-    const { title, amount, status, project, deadline, description } = body;
-
-    if (!title || !amount || !status || !project) {
-      return new NextResponse('Missing required fields', { status: 400 });
-    }
-
-    const grant = await prisma.grant.create({
-      data: {
-        title,
-        amount: parseFloat(amount),
-        status,
-        project,
-        deadline: deadline ? new Date(deadline) : null,
-        description,
-        createdBy: userId,
-        assignedTo: userId,
-      },
-    });
-
-    return NextResponse.json(grant);
+    // In demo mode, we just return a success response
+    return NextResponse.json({ success: true, message: 'Grant created successfully (Demo)' });
   } catch (error) {
-    console.error('[GRANTS_POST]', error);
-    return new NextResponse('Internal error', { status: 500 });
+    console.error('Error creating grant:', error);
+    return NextResponse.json(
+      { error: 'Failed to create grant' },
+      { status: 500 }
+    );
   }
 } 

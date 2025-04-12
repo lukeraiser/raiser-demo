@@ -159,9 +159,9 @@ const OpportunityDetailsModal = ({ opportunity, onClose }: OpportunityDetailsMod
 
             <div className="space-y-6">
               <section>
-                <h4 className="font-bold text-lg mb-2">1. Organization Details</h4>
+                <h4 className="font-bold text-lg mb-2">1. Organisation Details</h4>
                 <div className="space-y-1">
-                  <p>Organization Name: Greenfield Community Trust</p>
+                  <p>Organisation Name: Greenfield Community Trust</p>
                   <p>Charity Number: 1234567</p>
                   <p>Contact Person: Sara Thompson</p>
                   <p>Email: sara@greenfieldtrust.org</p>

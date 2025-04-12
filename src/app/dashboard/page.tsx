@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line, ComposedChart } from 'recharts';
 import { PieChart, Pie, Cell, Legend } from 'recharts';
 import Header from '@/components/Header';
@@ -100,26 +101,15 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <div className="p-8">
+      <div className="p-8 mt-16">
         {/* Page Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">👋 Welcome to your dashboard</h1>
-          <div className="relative">
-            <select 
-              value={selectedPeriod}
-              onChange={(e) => setSelectedPeriod(e.target.value)}
-              className="appearance-none bg-white border border-gray-200 rounded-md px-4 py-2 pr-8 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-            >
-              <option>Q1 2025</option>
-              <option>Q4 2024</option>
-              <option>Q3 2024</option>
-              <option>Q2 2024</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-              </svg>
-            </div>
+          <div>
+            <button className="px-6 py-2 bg-[#ff65c3] text-white rounded-full hover:bg-[#e55aaf] transition-colors flex items-center gap-2">
+              <span>🌐</span>
+              View Public Impact Page
+            </button>
           </div>
         </div>
 
@@ -261,10 +251,13 @@ export default function Dashboard() {
                   <div key={index} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
                     <div className="flex-shrink-0">
                       <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
-                        <img 
+                        <Image 
                           src={project.image} 
                           alt={project.name}
+                          width={64}
+                          height={64}
                           className="w-full h-full object-cover"
+                          sizes="64px"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.src = 'https://via.placeholder.com/64';

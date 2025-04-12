@@ -1,41 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model Charity {
-  id          String    @id @default(cuid())
-  name        String
-  description String?
-  logo        String?   // URL to logo image
-  website     String?
-  address     String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  projects    Project[]
-  users       UserProfile[]
-}
-
-model Donor {
-  id          String    @id @default(cuid())
-  name        String
-  type        String    // e.g., "Foundation", "Trust", "Corporate", "Government"
-  description String?
-  website     String?
-  logo        String?   // URL to logo image
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  grants      Grant[]   // Grants provided by this donor
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Project {
@@ -45,64 +14,36 @@ model Project {
   budget      Float
   raised      Float     @default(0)
   imageUrl    String?
-  status      String    @default("active")  // active, completed, cancelled
+  status      String    @default("active")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  createdBy   String    // Clerk user ID
-  charity     Charity   @relation(fields: [charityId], references: [id])
-  charityId   String
-  grants      Grant[]   // Relationship to grants for this project
-}
-
-model Course {
-  id            String    @id @default(cuid())
-  title         String
-  description   String
-  modules       Int
-  duration      String    // e.g., "2.5 hours"
-  imageUrl      String?
-  enrolledCount Int       @default(0)
-  progress      Int       @default(0)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  createdBy     String    // Clerk user ID
+  grants      Grant[]   @relation("ProjectGrants")
+  metrics     Metric[]
 }
 
 model Grant {
   id          String    @id @default(cuid())
   title       String
   amount      Float
-  status      String    // Applied, Won, Lost, In Progress
-  project     Project   @relation(fields: [projectId], references: [id])
-  projectId   String
-  donor       Donor     @relation(fields: [donorId], references: [id])
-  donorId     String
+  status      String    // researching, eligible, applied, successful, unsuccessful
+  projects    Project[] @relation("ProjectGrants")
   deadline    DateTime?
   description String?
+  eligibility String?
+  applicationDetails String?
+  logo        String?   // URL to logo image
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  createdBy   String    // Clerk user ID
-  assignedTo  String?   // Clerk user ID
-  comments    Comment[]
 }
 
-model Comment {
-  id        String   @id @default(cuid())
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  createdBy String   // Clerk user ID
-  grant     Grant    @relation(fields: [grantId], references: [id])
-  grantId   String
-}
-
-// Note: User profiles are managed by Clerk
-// This is just for additional user data we might want to store
-model UserProfile {
-  id        String   @id // Clerk user ID
-  role      String   @default("user") // admin, user
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  charity   Charity  @relation(fields: [charityId], references: [id])
-  charityId String
+model Metric {
+  id          String    @id @default(cuid())
+  name        String
+  value       Float
+  target      Float
+  unit        String
+  project     Project   @relation(fields: [projectId], references: [id])
+  projectId   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
