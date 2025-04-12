@@ -1,0 +1,35 @@
+export const projects = [
+  {
+    id: 'demo_project_1',
+    title: 'Core Costs',
+    description: 'Essential operational costs to keep our organisation running effectively.',
+    budget: 40000,
+    raised: 25000,
+    imageUrl: '/images/core-costs.jpg',
+    status: 'active',
+    charityId: 'demo_charity',
+    createdBy: 'demo_user',
+  },
+  {
+    id: 'demo_project_2',
+    title: 'Youth Club',
+    description: 'Supporting young people through engaging activities and mentorship.',
+    budget: 25000,
+    raised: 12000,
+    imageUrl: '/images/youth-club.jpg',
+    status: 'active',
+    charityId: 'demo_charity',
+    createdBy: 'demo_user',
+  },
+  {
+    id: 'demo_project_3',
+    title: 'Community Sports Program',
+    description: 'Promoting health and community engagement through sports activities.',
+    budget: 33000,
+    raised: 8000,
+    imageUrl: '/images/sports.jpg',
+    status: 'active',
+    charityId: 'demo_charity',
+    createdBy: 'demo_user',
+  }
+]; 
