@@ -6,6 +6,15 @@ async function main() {
   // Clear existing data
   await prisma.grant.deleteMany();
   await prisma.project.deleteMany();
+  await prisma.charity.deleteMany();
+
+  // Create a charity first
+  const charity = await prisma.charity.create({
+    data: {
+      name: 'Demo Charity',
+      description: 'A demonstration charity for testing purposes'
+    }
+  });
 
   // Create projects first
   const projects = await Promise.all([
@@ -16,7 +25,9 @@ async function main() {
         budget: 40000,
         raised: 25000,
         imageUrl: '/images/core-costs.jpg',
-        status: 'active'
+        status: 'active',
+        createdBy: 'demo_user',
+        charityId: charity.id
       }
     }),
     prisma.project.create({
@@ -26,7 +37,9 @@ async function main() {
         budget: 25000,
         raised: 12000,
         imageUrl: '/images/youth-club.jpg',
-        status: 'active'
+        status: 'active',
+        createdBy: 'demo_user',
+        charityId: charity.id
       }
     }),
     prisma.project.create({
@@ -36,7 +49,9 @@ async function main() {
         budget: 33000,
         raised: 8000,
         imageUrl: '/images/sports.jpg',
-        status: 'active'
+        status: 'active',
+        createdBy: 'demo_user',
+        charityId: charity.id
       }
     })
   ]);
