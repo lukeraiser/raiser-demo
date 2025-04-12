@@ -242,9 +242,14 @@ async function main() {
     }
   ];
 
+  // Create grants
   for (const grant of grants) {
     await prisma.grant.create({
-      data: grant,
+      data: {
+        ...grant,
+        createdBy: 'demo_user', // Clerk user ID
+        donor: 'Demo Donor Organization' // Name of the donor organization
+      },
     });
   }
 
