@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Board from '@/components/kanban/Board';
 import { Column, GrantCard, DatabaseGrant, GrantStatus, Project } from '@/types/kanban';
+import { convertDatabaseProjectToProject } from '@/utils/typeConverters';
 import Header from '@/components/Header';
 import LeftNavbar from '@/components/LeftNavbar';
 import OpportunityModal from '@/components/kanban/OpportunityModal';
@@ -101,10 +102,10 @@ export default function OpportunitiesPage() {
         const grantsResponse = await fetch('/api/grants');
         const grants: DatabaseGrant[] = await grantsResponse.json();
         
-        // Fetch projects
+        // Fetch projects and convert them to the UI type
         const projectsResponse = await fetch('/api/projects');
-        const fetchedProjects: Project[] = await projectsResponse.json();
-        setProjects(fetchedProjects);
+        const fetchedProjects = await projectsResponse.json();
+        setProjects(fetchedProjects.map(convertDatabaseProjectToProject));
 
         if (!Array.isArray(grants)) {
           console.error('Expected grants to be an array but got:', typeof grants);
@@ -117,18 +118,12 @@ export default function OpportunitiesPage() {
           cards: grants
             .filter(grant => grant.status === column.type)
             .map(grant => ({
-              id: grant.id,
-              title: grant.title,
-              amount: grant.amount,
-              deadline: grant.deadline || 'No deadline',
-              status: grant.status as GrantStatus,
+              ...grant,
+              deadline: grant.deadline || new Date().toISOString(),
               description: grant.description || '',
               eligibility: grant.eligibility || '',
               applicationDetails: grant.applicationDetails || '',
-              logo: grant.logo,
-              projects: grant.projects || [],
-              createdAt: grant.createdAt || new Date().toISOString(),
-              updatedAt: grant.updatedAt || new Date().toISOString()
+              projects: grant.projects || []
             }))
         }));
 

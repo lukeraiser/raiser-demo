@@ -1,39 +1,61 @@
 export type GrantStatus = 'researching' | 'eligible' | 'applied' | 'successful' | 'unsuccessful' | 'drafting';
 
-export interface Metric {
+// Base types that match Prisma schema
+interface BaseMetric {
   id: string;
   name: string;
   value: number;
   target: number;
   unit: string;
+  projectId: string;
 }
 
-export interface Project {
+interface BaseProject {
   id: string;
   title: string;
-  description: string;
+  description: string | null;
   budget: number;
   raised: number;
   imageUrl: string | null;
   status: string;
-  createdAt: string;
-  updatedAt: string;
-  metrics: Metric[];
 }
 
-export interface GrantCard {
-  id: number;
+interface BaseGrant {
+  id: string;
   title: string;
   amount: number;
-  deadline: string;
-  status: GrantStatus;
-  description: string;
-  eligibility: string;
+  description: string | null;
+  eligibility: string | null;
   applicationDetails: string | null;
   logo: string | null;
-  projects?: Project[];
+  status: GrantStatus;
+}
+
+// Database response types
+export interface DatabaseMetric extends BaseMetric {
   createdAt: string;
   updatedAt: string;
+}
+
+export interface DatabaseProject extends BaseProject {
+  createdAt: string;
+  updatedAt: string;
+  metrics: DatabaseMetric[];
+}
+
+export interface DatabaseGrant extends BaseGrant {
+  createdAt: string;
+  updatedAt: string;
+  deadline: string | null;
+  projects: DatabaseProject[];
+}
+
+// Kanban board types
+export interface GrantCard extends BaseGrant {
+  createdAt: string;
+  updatedAt: string;
+  deadline: string;
+  projects: DatabaseProject[];
 }
 
 export interface Column {
@@ -45,34 +67,22 @@ export interface Column {
   updatedAt: string;
 }
 
-export interface DatabaseGrant {
-  id: number;
-  title: string;
-  amount: number;
-  status: string;
-  deadline: string | null;
-  description: string | null;
-  eligibility: string | null;
-  applicationDetails: string | null;
-  logo: string | null;
-  createdAt: string;
-  updatedAt: string;
-  projects: {
-    id: number;
-    title: string;
-    description: string | null;
-    budget: number;
-    raised: number;
-    imageUrl: string | null;
-    status: string;
-    createdAt: string;
-    updatedAt: string;
-    metrics: Array<{
-      id: string;
-      name: string;
-      value: number;
-      target: number;
-      unit: string;
-    }>;
-  }[];
+// Full application types (with relationships)
+export interface Metric extends BaseMetric {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Project extends BaseProject {
+  createdAt: Date;
+  updatedAt: Date;
+  metrics: Metric[];
+  grants: Grant[];
+}
+
+export interface Grant extends BaseGrant {
+  createdAt: Date;
+  updatedAt: Date;
+  deadline: Date | null;
+  projects: Project[];
 } 
