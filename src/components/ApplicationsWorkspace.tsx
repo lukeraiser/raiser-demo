@@ -280,9 +280,9 @@ export default function ApplicationsWorkspace({
               <div className="relative">
                 <select
                   id="grant-select"
-                  value={selectedGrant?.id || ''}
+                  value={selectedGrant?.id?.toString() || ''}
                   onChange={(e) => {
-                    const grant = availableGrants.find(g => g.id === e.target.value);
+                    const grant = availableGrants.find(g => g.id === parseInt(e.target.value));
                     if (grant) onGrantSelect(grant);
                   }}
                   className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm rounded-md appearance-none bg-white"
@@ -324,7 +324,12 @@ export default function ApplicationsWorkspace({
                   <p><span className="font-medium">Amount:</span> £{selectedGrant.amount.toLocaleString()}</p>
                   <p><span className="font-medium">Deadline:</span> {new Date(selectedGrant.deadline).toLocaleDateString()}</p>
                   <p><span className="font-medium">Eligibility:</span> {selectedGrant.eligibility}</p>
-                  <p><span className="font-medium">Application Details:</span> {selectedGrant.applicationDetails}</p>
+                  <div className="mt-6">
+                    <h3 className="text-lg font-medium text-gray-900">Application Details</h3>
+                    <p className="mt-2 text-sm text-gray-500">
+                      {selectedGrant?.application_details || 'No application details available.'}
+                    </p>
+                  </div>
                 </div>
               </div>
             ) : (
