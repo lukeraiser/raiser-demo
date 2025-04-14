@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         description,
         budget,
         raised,
-        imageUrl,
+        image_url,
         status,
       },
     });
