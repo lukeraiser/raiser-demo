@@ -2,26 +2,24 @@
 
 import { useState } from 'react';
 
-interface ImpactMetric {
+interface Metric {
   id: string;
-  title: string;
-  description: string;
-  current_value: number;
-  target_value: number;
+  name: string;
+  currentValue: number;
+  targetValue: number;
   unit: string;
-  category: string;
 }
 
 interface ImpactMetricsProps {
-  metrics: ImpactMetric[];
+  metrics: Metric[];
   onUpdate: (id: string, data: any) => void;
 }
 
 export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps) {
   const [editingMetric, setEditingMetric] = useState<string | null>(null);
-  const [editedData, setEditedData] = useState<Partial<ImpactMetric>>({});
+  const [editedData, setEditedData] = useState<Partial<Metric>>({});
 
-  const handleEdit = (metric: ImpactMetric) => {
+  const handleEdit = (metric: Metric) => {
     setEditingMetric(metric.id);
     setEditedData(metric);
   };
@@ -35,7 +33,7 @@ export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps)
     setEditingMetric(null);
   };
 
-  const categories = Array.from(new Set(metrics.map(m => m.category)));
+  const categories = Array.from(new Set(metrics.map(m => m.name)));
 
   return (
     <div className="space-y-8">
@@ -44,56 +42,43 @@ export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps)
           <h3 className="text-lg font-semibold text-gray-900">{category}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {metrics
-              .filter(metric => metric.category === category)
+              .filter(metric => metric.name === category)
               .map(metric => (
                 <div key={metric.id} className="bg-white rounded-lg border border-gray-200 p-6">
                   {editingMetric === metric.id ? (
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Title
+                          Name
                         </label>
                         <input
                           type="text"
-                          value={editedData.title || ''}
-                          onChange={(e) => setEditedData({ ...editedData, title: e.target.value })}
+                          value={editedData.name || ''}
+                          onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Description
+                          Current Value
                         </label>
-                        <textarea
-                          value={editedData.description || ''}
-                          onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-                          rows={2}
+                        <input
+                          type="number"
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
+                          value={editedData.currentValue || ''}
+                          onChange={(e) => setEditedData({ ...editedData, currentValue: Number(e.target.value) })}
                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Current Value
-                          </label>
-                          <input
-                            type="number"
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
-                            value={editedData.current_value || ''}
-                            onChange={(e) => setEditedData({ ...editedData, current_value: Number(e.target.value) })}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Target Value
-                          </label>
-                          <input
-                            type="number"
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
-                            value={editedData.target_value || ''}
-                            onChange={(e) => setEditedData({ ...editedData, target_value: Number(e.target.value) })}
-                          />
-                        </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Target Value
+                        </label>
+                        <input
+                          type="number"
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
+                          value={editedData.targetValue || ''}
+                          onChange={(e) => setEditedData({ ...editedData, targetValue: Number(e.target.value) })}
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -125,8 +110,7 @@ export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps)
                     <>
                       <div className="flex justify-between items-start mb-4">
                         <div>
-                          <h4 className="text-lg font-semibold text-gray-900">{metric.title}</h4>
-                          <p className="text-sm text-gray-600 mt-1">{metric.description}</p>
+                          <h4 className="text-lg font-semibold text-gray-900">{metric.name}</h4>
                         </div>
                         <button
                           onClick={() => handleEdit(metric)}
@@ -139,17 +123,17 @@ export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps)
                       </div>
                       <div className="space-y-2">
                         <div className="text-right text-sm font-medium text-gray-900">
-                          {((metric.current_value / metric.target_value) * 100).toFixed(0)}%
+                          {((metric.currentValue / metric.targetValue) * 100).toFixed(0)}%
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div
                             className="bg-pink-500 h-2 rounded-full"
-                            style={{ width: `${(metric.current_value / metric.target_value) * 100}%` }}
+                            style={{ width: `${(metric.currentValue / metric.targetValue) * 100}%` }}
                           />
                         </div>
                         <div className="mt-2 flex justify-between text-sm text-gray-600">
-                          <span>Current: {metric.current_value.toLocaleString()} {metric.unit}</span>
-                          <span>Target: {metric.target_value.toLocaleString()} {metric.unit}</span>
+                          <span>Current: {metric.currentValue.toLocaleString()} {metric.unit}</span>
+                          <span>Target: {metric.targetValue.toLocaleString()} {metric.unit}</span>
                         </div>
                       </div>
                     </>
