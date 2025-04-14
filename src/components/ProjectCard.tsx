@@ -10,15 +10,21 @@ interface ProjectWithFunding {
   description: string;
   budget: number;
   raised: number;
-  image_url: string;
+  imageUrl: string;
   status: string;
 }
 
-interface ProjectCardProps extends ProjectWithFunding {
+interface ProjectCardProps {
+  id: string;
+  title: string;
+  description: string;
+  budget: number;
+  raised: number;
+  imageUrl: string;
   onUpdate: (project: ProjectWithFunding) => void;
 }
 
-export default function ProjectCard({ id, title, description, budget, raised, image_url, onUpdate }: ProjectCardProps) {
+export default function ProjectCard({ id, title, description, budget, raised, imageUrl, onUpdate }: ProjectCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -31,7 +37,7 @@ export default function ProjectCard({ id, title, description, budget, raised, im
         <div className="relative h-48 bg-gray-100">
           {!imageError ? (
             <Image
-              src={image_url}
+              src={imageUrl}
               alt={title}
               fill
               className="object-cover"
@@ -82,7 +88,7 @@ export default function ProjectCard({ id, title, description, budget, raised, im
 
       {isEditing && (
         <ProjectDetailsModal
-          project={{ id, title, description, budget, raised, image_url, status: 'active' }}
+          project={{ id, title, description, budget, raised, imageUrl, status: 'active' }}
           onClose={() => setIsEditing(false)}
           onUpdate={(updatedProject) => onUpdate(updatedProject)}
         />

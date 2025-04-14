@@ -9,12 +9,12 @@ export interface Metric {
 }
 
 export interface Project {
-  id: number;
+  id: string;
   title: string;
-  description: string | null;
+  description: string;
   budget: number;
   raised: number;
-  image_url: string | null;
+  imageUrl: string | null;
   status: string;
   createdAt: string;
   updatedAt: string;

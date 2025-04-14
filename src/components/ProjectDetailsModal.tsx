@@ -10,7 +10,7 @@ interface Project {
   description: string;
   budget: number;
   raised: number;
-  image_url: string;
+  imageUrl: string;
   status: string;
   opportunities?: Array<{
     id: string;
@@ -142,14 +142,14 @@ export default function ProjectDetailsModal({ project, onClose, onUpdate }: Proj
             </div>
 
             <div>
-              <label htmlFor="image_url" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">
                 Image URL
               </label>
               <input
                 type="text"
-                id="image_url"
-                value={formData.image_url}
-                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                id="imageUrl"
+                value={formData.imageUrl}
+                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
                 required
               />

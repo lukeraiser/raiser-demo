@@ -11,14 +11,14 @@ datasource db {
 
 model Project {
   id          String    @id @default(uuid())
-  created_at  DateTime  @default(now())
+  createdAt   DateTime  @default(now()) @map("created_at")
   title       String
   description String?
   budget      Float
   raised      Float     @default(0)
-  image_url   String?
+  imageUrl    String?   @map("image_url")
   status      String    @default("active")
-  updated_at  DateTime  @updatedAt
+  updatedAt   DateTime  @updatedAt @map("updated_at")
   grants      Grant[]   @relation("ProjectGrants")
   metrics     Metric[]
 }
@@ -40,12 +40,12 @@ model Grant {
 
 model Metric {
   id          String    @id @default(uuid())
-  created_at  DateTime  @default(now())
+  createdAt   DateTime  @default(now()) @map("created_at")
   name        String
   value       Float
   target      Float
   unit        String
-  project     Project   @relation(fields: [project_id], references: [id])
-  project_id  String
-  updated_at  DateTime  @updatedAt
+  project     Project   @relation(fields: [projectId], references: [id])
+  projectId   String    @map("project_id")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 }

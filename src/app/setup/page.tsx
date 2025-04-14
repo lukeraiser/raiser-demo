@@ -19,18 +19,16 @@ interface Project {
   description: string;
   budget: number;
   raised: number;
-  image_url: string;
+  imageUrl: string;
   status: string;
 }
 
-interface ImpactMetric {
+interface Metric {
   id: string;
-  title: string;
-  description: string;
-  current_value: number;
-  target_value: number;
+  name: string;
+  currentValue: number;
+  targetValue: number;
   unit: string;
-  category: string;
 }
 
 const sidebarItems = [
@@ -73,7 +71,7 @@ export default function Setup() {
       description: 'Essential operational costs to keep our organization running effectively.',
       budget: 40000,
       raised: 25000,
-      image_url: '/images/core-costs.jpg',
+      imageUrl: '/images/core-costs.jpg',
       status: 'active'
     },
     {
@@ -82,7 +80,7 @@ export default function Setup() {
       description: 'Supporting young people through engaging activities and mentorship.',
       budget: 25000,
       raised: 12000,
-      image_url: '/images/youth-club.jpg',
+      imageUrl: '/images/youth-club.jpg',
       status: 'active'
     },
     {
@@ -91,46 +89,38 @@ export default function Setup() {
       description: 'Promoting health and community engagement through sports activities.',
       budget: 33000,
       raised: 8000,
-      image_url: '/images/sports.jpg',
+      imageUrl: '/images/sports.jpg',
       status: 'active'
     }
   ]);
-  const [impactMetrics, setImpactMetrics] = useState<ImpactMetric[]>([
+  const [impactMetrics, setImpactMetrics] = useState<Metric[]>([
     {
       id: '1',
-      title: 'People Supported',
-      description: 'Number of individuals who have received support through our programs',
-      current_value: 150,
-      target_value: 200,
-      unit: 'people',
-      category: 'Community Impact'
+      name: 'People Supported',
+      currentValue: 150,
+      targetValue: 200,
+      unit: 'individuals'
     },
     {
       id: '2',
-      title: 'Volunteer Hours',
-      description: 'Total hours contributed by volunteers to our community projects',
-      current_value: 2500,
-      target_value: 3000,
-      unit: 'hours',
-      category: 'Community Impact'
+      name: 'Training Hours',
+      currentValue: 2500,
+      targetValue: 3000,
+      unit: 'hours'
     },
     {
       id: '3',
-      title: 'Funds Raised',
-      description: 'Total amount raised for community projects and initiatives',
-      current_value: 75000,
-      target_value: 100000,
-      unit: '£',
-      category: 'Financial Impact'
+      name: 'Funding Secured',
+      currentValue: 75000,
+      targetValue: 100000,
+      unit: 'GBP'
     },
     {
       id: '4',
-      title: 'Program Success Rate',
-      description: 'Percentage of program participants who achieve their goals',
-      current_value: 85,
-      target_value: 90,
-      unit: '%',
-      category: 'Program Impact'
+      name: 'Satisfaction Rate',
+      currentValue: 85,
+      targetValue: 90,
+      unit: '%'
     }
   ]);
 
