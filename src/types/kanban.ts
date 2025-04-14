@@ -63,7 +63,7 @@ export interface DatabaseGrant {
     description: string | null;
     budget: number;
     raised: number;
-    image_url: string | null;
+    imageUrl: string | null;
     status: string;
     createdAt: string;
     updatedAt: string;

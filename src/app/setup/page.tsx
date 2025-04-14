@@ -10,7 +10,7 @@ interface Version {
   id: string;
   content: string;
   timestamp: Date;
-  is_published: boolean;
+  isPublished: boolean;
 }
 
 interface Project {
@@ -53,7 +53,7 @@ export default function Setup() {
       id: '1',
       content: 'Small But Mighty empowers the citizens of Smallville to be everyday heroes in their community. Through grassroots initiatives and local journalism mentorship supported by our patron Clark Kent of the Daily Planet, we foster strength, courage, and truth in our next generation of community leaders.',
       timestamp: new Date(),
-      is_published: true
+      isPublished: true
     }
   ]);
   const [visionVersions, setVisionVersions] = useState<Version[]>([
@@ -61,7 +61,7 @@ export default function Setup() {
       id: '1',
       content: 'We envision Smallville as a beacon of hope where every citizen, no matter how ordinary they may seem, has the power to make an extraordinary difference. Just as our town has shown that heroes can come from anywhere, we believe in nurturing the superhuman potential within every community member.',
       timestamp: new Date(),
-      is_published: true
+      isPublished: true
     }
   ]);
   const [projects, setProjects] = useState<Project[]>([
@@ -131,7 +131,7 @@ export default function Setup() {
       id: Date.now().toString(),
       content,
       timestamp: new Date(),
-      is_published: false
+      isPublished: false
     };
 
     if (type === 'mission') {
@@ -146,14 +146,14 @@ export default function Setup() {
       setMissionVersions(prev => 
         prev.map(v => ({
           ...v,
-          is_published: v.id === versionId
+          isPublished: v.id === versionId
         }))
       );
     } else {
       setVisionVersions(prev => 
         prev.map(v => ({
           ...v,
-          is_published: v.id === versionId
+          isPublished: v.id === versionId
         }))
       );
     }
@@ -276,7 +276,7 @@ export default function Setup() {
                   </div>
                   <div className="bg-gray-50 p-4 rounded-md">
                     <p className="text-gray-700">
-                      {missionVersions.find(v => v.is_published)?.content || 'No published version yet'}
+                      {missionVersions.find(v => v.isPublished)?.content || 'No published version yet'}
                     </p>
                   </div>
                   <div className="space-y-2">
@@ -310,7 +310,7 @@ export default function Setup() {
                               {version.timestamp.toLocaleString()}
                             </p>
                           </div>
-                          {!version.is_published && (
+                          {!version.isPublished && (
                             <button
                               onClick={() => publishVersion('mission', version.id)}
                               className="ml-2 px-3 py-1 text-sm bg-pink-500 text-white rounded-md hover:bg-pink-600"
@@ -334,7 +334,7 @@ export default function Setup() {
                   </div>
                   <div className="bg-gray-50 p-4 rounded-md">
                     <p className="text-gray-700">
-                      {visionVersions.find(v => v.is_published)?.content || 'No published version yet'}
+                      {visionVersions.find(v => v.isPublished)?.content || 'No published version yet'}
                     </p>
                   </div>
                   <div className="space-y-2">
@@ -368,7 +368,7 @@ export default function Setup() {
                               {version.timestamp.toLocaleString()}
                             </p>
                           </div>
-                          {!version.is_published && (
+                          {!version.isPublished && (
                             <button
                               onClick={() => publishVersion('vision', version.id)}
                               className="ml-2 px-3 py-1 text-sm bg-pink-500 text-white rounded-md hover:bg-pink-600"
