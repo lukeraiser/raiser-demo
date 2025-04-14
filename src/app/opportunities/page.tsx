@@ -114,7 +114,9 @@ export default function OpportunitiesPage() {
               eligibility: grant.eligibility || '',
               application_details: grant.application_details || '',
               logo: grant.logo,
-              projects: grant.projects || []
+              projects: grant.projects || [],
+              created_at: grant.created_at || new Date().toISOString(),
+              updated_at: grant.updated_at || new Date().toISOString()
             }))
         }));
 
