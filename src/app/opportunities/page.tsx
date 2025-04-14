@@ -112,7 +112,7 @@ export default function OpportunitiesPage() {
               status: grant.status as GrantStatus,
               description: grant.description || '',
               eligibility: grant.eligibility || '',
-              applicationDetails: grant.applicationDetails || '',
+              application_details: grant.application_details || '',
               logo: grant.logo,
               projects: grant.projects || []
             }))
@@ -161,7 +161,7 @@ export default function OpportunitiesPage() {
           (grantsForFunder.filter(g => g.status === 'successful').length /
             grantsForFunder.length) * 100
         ) || 0,
-        applicationProcess: firstGrant.applicationDetails
+        applicationProcess: firstGrant.application_details
       };
     }
   );
