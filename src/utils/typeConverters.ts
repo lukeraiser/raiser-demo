@@ -1,16 +1,16 @@
 import { DatabaseProject, DatabaseGrant, DatabaseMetric, Project, Grant, Metric } from '@/types/kanban';
 
-export function convertDatabaseProjectToProject(dbProject: DatabaseProject): Project {
+export function convertDbProjectToProject(dbProject: DatabaseProject): Project {
   return {
     ...dbProject,
     createdAt: new Date(dbProject.createdAt),
     updatedAt: new Date(dbProject.updatedAt),
-    metrics: dbProject.metrics.map(convertDatabaseMetricToMetric),
+    metrics: dbProject.metrics.map(convertDbMetricToMetric),
     grants: [] // Since we don't have grants in the database response
   };
 }
 
-export function convertDatabaseMetricToMetric(dbMetric: DatabaseMetric): Metric {
+export function convertDbMetricToMetric(dbMetric: DatabaseMetric): Metric {
   return {
     ...dbMetric,
     createdAt: new Date(dbMetric.createdAt),
@@ -18,12 +18,12 @@ export function convertDatabaseMetricToMetric(dbMetric: DatabaseMetric): Metric 
   };
 }
 
-export function convertDatabaseGrantToGrant(dbGrant: DatabaseGrant): Grant {
+export function convertDbGrantToGrant(dbGrant: DatabaseGrant): Grant {
   return {
     ...dbGrant,
     createdAt: new Date(dbGrant.createdAt),
     updatedAt: new Date(dbGrant.updatedAt),
     deadline: dbGrant.deadline ? new Date(dbGrant.deadline) : null,
-    projects: dbGrant.projects.map(convertDatabaseProjectToProject)
+    projects: dbGrant.projects.map(convertDbProjectToProject)
   };
 } 
