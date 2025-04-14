@@ -4,27 +4,21 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ProjectDetailsModal from './ProjectDetailsModal';
 
-interface ProjectCardProps {
-  id: string;
-  title: string;
-  description: string;
-  budget: number;
-  raised: number;
-  imageUrl: string;
-  onUpdate: (updatedProject: ProjectWithFunding) => void;
-}
-
 interface ProjectWithFunding {
   id: string;
   title: string;
   description: string;
   budget: number;
   raised: number;
-  imageUrl: string;
+  image_url: string;
   status: string;
 }
 
-export default function ProjectCard({ id, title, description, budget, raised, imageUrl, onUpdate }: ProjectCardProps) {
+interface ProjectCardProps extends ProjectWithFunding {
+  onUpdate: (project: ProjectWithFunding) => void;
+}
+
+export default function ProjectCard({ id, title, description, budget, raised, image_url, onUpdate }: ProjectCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -37,7 +31,7 @@ export default function ProjectCard({ id, title, description, budget, raised, im
         <div className="relative h-48 bg-gray-100">
           {!imageError ? (
             <Image
-              src={imageUrl}
+              src={image_url}
               alt={title}
               fill
               className="object-cover"
@@ -88,7 +82,7 @@ export default function ProjectCard({ id, title, description, budget, raised, im
 
       {isEditing && (
         <ProjectDetailsModal
-          project={{ id, title, description, budget, raised, imageUrl, status: 'active' }}
+          project={{ id, title, description, budget, raised, image_url, status: 'active' }}
           onClose={() => setIsEditing(false)}
           onUpdate={(updatedProject) => onUpdate(updatedProject)}
         />

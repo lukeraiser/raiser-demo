@@ -6,8 +6,8 @@ interface ImpactMetric {
   id: string;
   title: string;
   description: string;
-  currentValue: number;
-  targetValue: number;
+  current_value: number;
+  target_value: number;
   unit: string;
   category: string;
 }
@@ -78,9 +78,9 @@ export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps)
                           </label>
                           <input
                             type="number"
-                            value={editedData.currentValue || ''}
-                            onChange={(e) => setEditedData({ ...editedData, currentValue: Number(e.target.value) })}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
+                            value={editedData.current_value || ''}
+                            onChange={(e) => setEditedData({ ...editedData, current_value: Number(e.target.value) })}
                           />
                         </div>
                         <div>
@@ -89,9 +89,9 @@ export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps)
                           </label>
                           <input
                             type="number"
-                            value={editedData.targetValue || ''}
-                            onChange={(e) => setEditedData({ ...editedData, targetValue: Number(e.target.value) })}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
+                            value={editedData.target_value || ''}
+                            onChange={(e) => setEditedData({ ...editedData, target_value: Number(e.target.value) })}
                           />
                         </div>
                       </div>
@@ -138,29 +138,18 @@ export default function ImpactMetrics({ metrics, onUpdate }: ImpactMetricsProps)
                         </button>
                       </div>
                       <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-600">Progress</span>
-                          <span className="text-gray-900 font-medium">
-                            {((metric.currentValue / metric.targetValue) * 100).toFixed(0)}%
-                          </span>
+                        <div className="text-right text-sm font-medium text-gray-900">
+                          {((metric.current_value / metric.target_value) * 100).toFixed(0)}%
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div
-                            className="h-2 rounded-full bg-pink-500"
-                            style={{ width: `${(metric.currentValue / metric.targetValue) * 100}%` }}
+                            className="bg-pink-500 h-2 rounded-full"
+                            style={{ width: `${(metric.current_value / metric.target_value) * 100}%` }}
                           />
                         </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-600">Current</span>
-                          <span className="text-gray-900 font-medium">
-                            {metric.currentValue.toLocaleString()} {metric.unit}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-600">Target</span>
-                          <span className="text-gray-900 font-medium">
-                            {metric.targetValue.toLocaleString()} {metric.unit}
-                          </span>
+                        <div className="mt-2 flex justify-between text-sm text-gray-600">
+                          <span>Current: {metric.current_value.toLocaleString()} {metric.unit}</span>
+                          <span>Target: {metric.target_value.toLocaleString()} {metric.unit}</span>
                         </div>
                       </div>
                     </>

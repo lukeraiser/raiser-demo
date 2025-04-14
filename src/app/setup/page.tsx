@@ -10,7 +10,7 @@ interface Version {
   id: string;
   content: string;
   timestamp: Date;
-  isPublished: boolean;
+  is_published: boolean;
 }
 
 interface Project {
@@ -19,7 +19,7 @@ interface Project {
   description: string;
   budget: number;
   raised: number;
-  imageUrl: string;
+  image_url: string;
   status: string;
 }
 
@@ -27,8 +27,8 @@ interface ImpactMetric {
   id: string;
   title: string;
   description: string;
-  currentValue: number;
-  targetValue: number;
+  current_value: number;
+  target_value: number;
   unit: string;
   category: string;
 }
@@ -55,7 +55,7 @@ export default function Setup() {
       id: '1',
       content: 'Small But Mighty empowers the citizens of Smallville to be everyday heroes in their community. Through grassroots initiatives and local journalism mentorship supported by our patron Clark Kent of the Daily Planet, we foster strength, courage, and truth in our next generation of community leaders.',
       timestamp: new Date(),
-      isPublished: true
+      is_published: true
     }
   ]);
   const [visionVersions, setVisionVersions] = useState<Version[]>([
@@ -63,7 +63,7 @@ export default function Setup() {
       id: '1',
       content: 'We envision Smallville as a beacon of hope where every citizen, no matter how ordinary they may seem, has the power to make an extraordinary difference. Just as our town has shown that heroes can come from anywhere, we believe in nurturing the superhuman potential within every community member.',
       timestamp: new Date(),
-      isPublished: true
+      is_published: true
     }
   ]);
   const [projects, setProjects] = useState<Project[]>([
@@ -73,7 +73,7 @@ export default function Setup() {
       description: 'Essential operational costs to keep our organization running effectively.',
       budget: 40000,
       raised: 25000,
-      imageUrl: '/images/core-costs.jpg',
+      image_url: '/images/core-costs.jpg',
       status: 'active'
     },
     {
@@ -82,7 +82,7 @@ export default function Setup() {
       description: 'Supporting young people through engaging activities and mentorship.',
       budget: 25000,
       raised: 12000,
-      imageUrl: '/images/youth-club.jpg',
+      image_url: '/images/youth-club.jpg',
       status: 'active'
     },
     {
@@ -91,7 +91,7 @@ export default function Setup() {
       description: 'Promoting health and community engagement through sports activities.',
       budget: 33000,
       raised: 8000,
-      imageUrl: '/images/sports.jpg',
+      image_url: '/images/sports.jpg',
       status: 'active'
     }
   ]);
@@ -100,8 +100,8 @@ export default function Setup() {
       id: '1',
       title: 'People Supported',
       description: 'Number of individuals who have received support through our programs',
-      currentValue: 150,
-      targetValue: 200,
+      current_value: 150,
+      target_value: 200,
       unit: 'people',
       category: 'Community Impact'
     },
@@ -109,8 +109,8 @@ export default function Setup() {
       id: '2',
       title: 'Volunteer Hours',
       description: 'Total hours contributed by volunteers to our community projects',
-      currentValue: 2500,
-      targetValue: 3000,
+      current_value: 2500,
+      target_value: 3000,
       unit: 'hours',
       category: 'Community Impact'
     },
@@ -118,8 +118,8 @@ export default function Setup() {
       id: '3',
       title: 'Funds Raised',
       description: 'Total amount raised for community projects and initiatives',
-      currentValue: 75000,
-      targetValue: 100000,
+      current_value: 75000,
+      target_value: 100000,
       unit: '£',
       category: 'Financial Impact'
     },
@@ -127,8 +127,8 @@ export default function Setup() {
       id: '4',
       title: 'Program Success Rate',
       description: 'Percentage of program participants who achieve their goals',
-      currentValue: 85,
-      targetValue: 90,
+      current_value: 85,
+      target_value: 90,
       unit: '%',
       category: 'Program Impact'
     }
@@ -141,7 +141,7 @@ export default function Setup() {
       id: Date.now().toString(),
       content,
       timestamp: new Date(),
-      isPublished: false
+      is_published: false
     };
 
     if (type === 'mission') {
@@ -156,14 +156,14 @@ export default function Setup() {
       setMissionVersions(prev => 
         prev.map(v => ({
           ...v,
-          isPublished: v.id === versionId
+          is_published: v.id === versionId
         }))
       );
     } else {
       setVisionVersions(prev => 
         prev.map(v => ({
           ...v,
-          isPublished: v.id === versionId
+          is_published: v.id === versionId
         }))
       );
     }
@@ -286,7 +286,7 @@ export default function Setup() {
                   </div>
                   <div className="bg-gray-50 p-4 rounded-md">
                     <p className="text-gray-700">
-                      {missionVersions.find(v => v.isPublished)?.content || 'No published version yet'}
+                      {missionVersions.find(v => v.is_published)?.content || 'No published version yet'}
                     </p>
                   </div>
                   <div className="space-y-2">
@@ -320,7 +320,7 @@ export default function Setup() {
                               {version.timestamp.toLocaleString()}
                             </p>
                           </div>
-                          {!version.isPublished && (
+                          {!version.is_published && (
                             <button
                               onClick={() => publishVersion('mission', version.id)}
                               className="ml-2 px-3 py-1 text-sm bg-pink-500 text-white rounded-md hover:bg-pink-600"
@@ -344,7 +344,7 @@ export default function Setup() {
                   </div>
                   <div className="bg-gray-50 p-4 rounded-md">
                     <p className="text-gray-700">
-                      {visionVersions.find(v => v.isPublished)?.content || 'No published version yet'}
+                      {visionVersions.find(v => v.is_published)?.content || 'No published version yet'}
                     </p>
                   </div>
                   <div className="space-y-2">
@@ -378,7 +378,7 @@ export default function Setup() {
                               {version.timestamp.toLocaleString()}
                             </p>
                           </div>
-                          {!version.isPublished && (
+                          {!version.is_published && (
                             <button
                               onClick={() => publishVersion('vision', version.id)}
                               className="ml-2 px-3 py-1 text-sm bg-pink-500 text-white rounded-md hover:bg-pink-600"
