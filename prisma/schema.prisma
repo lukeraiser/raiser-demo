@@ -24,8 +24,8 @@ model Project {
 }
 
 model Grant {
-  id                  String    @id @default(uuid())
-  createdAt          DateTime  @default(now())
+  id                String    @id @default(uuid())
+  createdAt         DateTime  @default(now())
   title             String
   amount            Float
   description       String?
