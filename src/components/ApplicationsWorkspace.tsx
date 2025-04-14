@@ -93,6 +93,13 @@ export default function ApplicationsWorkspace({
     }, 1500);
   };
 
+  const handleGrantSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const grant = availableGrants.find(g => g.id === e.target.value);
+    if (grant) {
+      onGrantSelect(grant);
+    }
+  };
+
   const renderSectionContent = () => {
     if (!selectedProject || !selectedGrant) return null;
 
@@ -281,10 +288,7 @@ export default function ApplicationsWorkspace({
                 <select
                   id="grant-select"
                   value={selectedGrant?.id?.toString() || ''}
-                  onChange={(e) => {
-                    const grant = availableGrants.find(g => g.id === parseInt(e.target.value));
-                    if (grant) onGrantSelect(grant);
-                  }}
+                  onChange={handleGrantSelect}
                   className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm rounded-md appearance-none bg-white"
                 >
                   <option value="">Select a grant...</option>
