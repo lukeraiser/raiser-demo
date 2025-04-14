@@ -21,7 +21,7 @@ export function parseGrants(csvData: string): GrantCard[] {
     const funderName = values[0].trim();
     
     return {
-      id: index + 1,
+      id: `${index + 1}`,
       title: funderName,
       amount: parseFloat(values[1].trim()),
       deadline: values[2].trim(),
