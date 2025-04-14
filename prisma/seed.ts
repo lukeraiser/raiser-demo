@@ -16,7 +16,7 @@ async function main() {
         description: 'Essential operational costs to keep our organisation running effectively.',
         budget: 40000,
         raised: 25000,
-        image_url: '/images/core-costs.jpg',
+        imageUrl: '/images/core-costs.jpg',
         status: 'active',
         metrics: {
           create: [
@@ -42,7 +42,7 @@ async function main() {
         description: 'Supporting young people through engaging activities and mentorship.',
         budget: 25000,
         raised: 12000,
-        image_url: '/images/youth-club.jpg',
+        imageUrl: '/images/youth-club.jpg',
         status: 'active',
         metrics: {
           create: [
@@ -68,7 +68,7 @@ async function main() {
         description: 'Promoting health and community engagement through sports activities.',
         budget: 33000,
         raised: 8000,
-        image_url: '/images/sports.jpg',
+        imageUrl: '/images/sports.jpg',
         status: 'active',
         metrics: {
           create: [
@@ -99,7 +99,7 @@ async function main() {
       deadline: new Date('2025-06-30'),
       description: 'Funding for community projects that matter',
       eligibility: 'UK registered charities and non-profit organisations',
-      application_details: 'Online application required with project plan',
+      applicationDetails: 'Online application required with project plan',
       logo: '/images/lottery.png',
     },
     {
@@ -109,7 +109,7 @@ async function main() {
       deadline: new Date('2025-04-28'),
       description: 'Supporting innovative solutions to social issues',
       eligibility: 'Small charities and social enterprises',
-      application_details: 'Two-stage application process',
+      applicationDetails: 'Two-stage application process',
       logo: '/images/fore.png',
     },
     {
@@ -119,7 +119,7 @@ async function main() {
       deadline: new Date('2025-05-15'),
       description: 'Supporting environmental and community initiatives',
       eligibility: 'UK registered environmental charities',
-      application_details: 'Detailed project proposal required',
+      applicationDetails: 'Detailed project proposal required',
       logo: '/images/king.png',
     },
     {
@@ -129,7 +129,7 @@ async function main() {
       deadline: new Date('2025-04-18'),
       description: 'Local community projects funding',
       eligibility: 'Local community organisations',
-      application_details: 'Simple online application',
+      applicationDetails: 'Simple online application',
       logo: null,
     },
     {
@@ -139,7 +139,7 @@ async function main() {
       deadline: new Date('2025-04-01'),
       description: 'Supporting grassroots charities',
       eligibility: 'Small UK charities with annual income under £50,000',
-      application_details: 'Monthly grant rounds',
+      applicationDetails: 'Monthly grant rounds',
       logo: '/images/matthew.png',
     },
     {
@@ -149,7 +149,7 @@ async function main() {
       deadline: new Date('2025-09-30'),
       description: 'Supporting UK charities and educational initiatives',
       eligibility: 'UK registered charities working with disadvantaged communities',
-      application_details: 'Rolling programme with 8 application windows per year',
+      applicationDetails: 'Rolling programme with 8 application windows per year',
       logo: '/images/leathersellers.png',
     },
     {
@@ -159,7 +159,7 @@ async function main() {
       deadline: new Date('2025-05-02'),
       description: 'Supporting rural and urban communities',
       eligibility: 'UK charities and not-for-profit organisations',
-      application_details: 'Online application with detailed project budget required',
+      applicationDetails: 'Online application with detailed project budget required',
       logo: '/images/trusthouse.webp',
     },
     {
@@ -169,7 +169,7 @@ async function main() {
       deadline: new Date('2025-07-30'),
       description: 'Capital grants for UK charities',
       eligibility: 'UK registered charities with annual income under £2 million',
-      application_details: 'Two-stage application process for capital projects',
+      applicationDetails: 'Two-stage application process for capital projects',
       logo: '/images/clothworkers.png',
     },
     {
@@ -179,7 +179,7 @@ async function main() {
       deadline: new Date('2025-10-15'),
       description: 'Local funding for community initiatives',
       eligibility: 'Community groups and small charities',
-      application_details: 'Application through local Community Foundation',
+      applicationDetails: 'Application through local Community Foundation',
       logo: '/images/community.png',
     },
     {
@@ -189,7 +189,7 @@ async function main() {
       deadline: new Date('2025-09-01'),
       description: 'Supporting charities across the UK',
       eligibility: 'UK registered charities',
-      application_details: 'Regular grants programme with online application',
+      applicationDetails: 'Regular grants programme with online application',
       logo: null,
     },
     {
@@ -199,7 +199,7 @@ async function main() {
       deadline: new Date('2025-08-30'),
       description: 'Core funding for voluntary and community groups',
       eligibility: 'UK organisations working for positive social change',
-      application_details: 'Two-stage application process with initial proposal',
+      applicationDetails: 'Two-stage application process with initial proposal',
       logo: null,
     },
     {
@@ -209,7 +209,7 @@ async function main() {
       deadline: new Date('2025-11-15'),
       description: 'Supporting social change and environmental protection',
       eligibility: 'UK organisations with clear social impact',
-      application_details: 'Expression of interest required before full application',
+      applicationDetails: 'Expression of interest required before full application',
       logo: null,
     },
     {
@@ -219,7 +219,7 @@ async function main() {
       deadline: new Date('2025-07-15'),
       description: 'Supporting small and local charities',
       eligibility: 'UK charities with income under £1 million',
-      application_details: 'Two-stage application process with development support',
+      applicationDetails: 'Two-stage application process with development support',
       logo: null,
     },
     {
@@ -229,7 +229,7 @@ async function main() {
       deadline: new Date('2025-08-20'),
       description: 'Capital funding for charities and educational institutions',
       eligibility: 'UK registered charities and educational institutions',
-      application_details: 'Detailed project proposal and budget required',
+      applicationDetails: 'Detailed project proposal and budget required',
       logo: null,
     }
   ];
@@ -244,7 +244,7 @@ async function main() {
         deadline: grant.deadline,
         description: grant.description,
         eligibility: grant.eligibility,
-        application_details: grant.application_details,
+        applicationDetails: grant.applicationDetails,
         logo: grant.logo,
         projects: { connect: [] } // Empty array means no projects connected initially
       }
