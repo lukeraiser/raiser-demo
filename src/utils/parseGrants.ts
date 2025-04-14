@@ -26,13 +26,13 @@ export function parseGrants(csvData: string): GrantCard[] {
       amount: parseFloat(values[1].trim()),
       deadline: values[2].trim(),
       status: 'researching' as GrantStatus,
-      description: values[3].trim(),
+      description: values[2].trim(),
       eligibility: values[3].trim(),
-      application_details: values[4].trim(),
+      applicationDetails: values[4].trim(),
       logo: LOGO_MAP[funderName] || null,
       projects: [],
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     };
   });
 } 

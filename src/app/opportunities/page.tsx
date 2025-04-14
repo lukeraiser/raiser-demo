@@ -14,37 +14,49 @@ const initialColumns: Column[] = [
     id: 'researching',
     title: 'Researching',
     type: 'researching',
-    cards: []
+    cards: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     id: 'eligible',
     title: 'Eligible',
     type: 'eligible',
-    cards: []
+    cards: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     id: 'drafting',
     title: 'Drafting',
     type: 'drafting',
-    cards: []
+    cards: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     id: 'applied',
     title: 'Applied',
     type: 'applied',
-    cards: []
+    cards: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     id: 'successful',
     title: 'Successful',
     type: 'successful',
-    cards: []
+    cards: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     id: 'unsuccessful',
     title: 'Unsuccessful',
     type: 'unsuccessful',
-    cards: []
+    cards: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -112,11 +124,11 @@ export default function OpportunitiesPage() {
               status: grant.status as GrantStatus,
               description: grant.description || '',
               eligibility: grant.eligibility || '',
-              application_details: grant.application_details || '',
+              applicationDetails: grant.applicationDetails || '',
               logo: grant.logo,
               projects: grant.projects || [],
-              created_at: grant.created_at || new Date().toISOString(),
-              updated_at: grant.updated_at || new Date().toISOString()
+              createdAt: grant.createdAt || new Date().toISOString(),
+              updatedAt: grant.updatedAt || new Date().toISOString()
             }))
         }));
 
@@ -163,7 +175,7 @@ export default function OpportunitiesPage() {
           (grantsForFunder.filter(g => g.status === 'successful').length /
             grantsForFunder.length) * 100
         ) || 0,
-        applicationProcess: firstGrant.application_details
+        applicationProcess: firstGrant.applicationDetails
       };
     }
   );

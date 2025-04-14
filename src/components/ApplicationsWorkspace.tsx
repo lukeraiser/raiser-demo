@@ -324,10 +324,10 @@ export default function ApplicationsWorkspace({
                   <p><span className="font-medium">Amount:</span> £{selectedGrant.amount.toLocaleString()}</p>
                   <p><span className="font-medium">Deadline:</span> {new Date(selectedGrant.deadline).toLocaleDateString()}</p>
                   <p><span className="font-medium">Eligibility:</span> {selectedGrant.eligibility}</p>
-                  <div className="mt-6">
-                    <h3 className="text-lg font-medium text-gray-900">Application Details</h3>
-                    <p className="mt-2 text-sm text-gray-500">
-                      {selectedGrant?.application_details || 'No application details available.'}
+                  <div className="mt-4">
+                    <h3 className="text-lg font-semibold mb-2">Application Details</h3>
+                    <p className="text-gray-600">
+                      {selectedGrant?.applicationDetails || 'No application details available.'}
                     </p>
                   </div>
                 </div>

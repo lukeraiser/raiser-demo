@@ -116,8 +116,10 @@ export default function Card({ card, index, onUpdate, onStartApplication }: Card
                 </span>
               </div>
 
-              <div className="mt-2 text-sm text-gray-500">
-                {card.application_details}
+              <div className="mt-2">
+                <p className="text-sm text-gray-600">
+                  {card.applicationDetails}
+                </p>
               </div>
             </div>
           </div>

@@ -16,8 +16,8 @@ export interface Project {
   raised: number;
   image_url: string | null;
   status: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
   metrics: Metric[];
 }
 
@@ -29,11 +29,11 @@ export interface GrantCard {
   status: GrantStatus;
   description: string;
   eligibility: string;
-  application_details: string;
+  applicationDetails: string | null;
   logo: string | null;
   projects?: Project[];
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Column {
@@ -41,6 +41,8 @@ export interface Column {
   title: string;
   type: GrantStatus;
   cards: GrantCard[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface DatabaseGrant {
@@ -51,10 +53,10 @@ export interface DatabaseGrant {
   deadline: string | null;
   description: string | null;
   eligibility: string | null;
-  application_details: string | null;
+  applicationDetails: string | null;
   logo: string | null;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
   projects: {
     id: number;
     title: string;
@@ -63,8 +65,8 @@ export interface DatabaseGrant {
     raised: number;
     image_url: string | null;
     status: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
     metrics: Array<{
       id: string;
       name: string;
