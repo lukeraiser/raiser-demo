@@ -11,10 +11,8 @@ export default function Home() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-600"></div>
-      </div>
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <h1>Welcome to Raiser</h1>
+    </main>
   );
 }

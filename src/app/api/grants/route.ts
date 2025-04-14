@@ -14,7 +14,6 @@ export async function GET() {
       }
     });
     console.log('Found grants:', grants);
-
     return NextResponse.json(grants);
   } catch (error) {
     console.error('Error fetching grants:', error);

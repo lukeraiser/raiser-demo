@@ -176,36 +176,6 @@ export default function OpportunitiesPage() {
       }
       return newStarred;
     });
-
-    // If starring, automatically add to researching column
-    if (!starredFunders.has(funderName)) {
-      const funder = funders.find(f => f.name === funderName);
-      if (funder) {
-        const newGrant: GrantCard = {
-          id: `new-${Date.now()}`,
-          title: funder.name,
-          amount: funder.totalFunding,
-          status: 'researching',
-          deadline: '',
-          description: funder.description,
-          eligibility: funder.eligibility,
-          applicationDetails: funder.applicationProcess,
-          logo: funder.logo,
-          projects: []
-        };
-
-        const updatedColumns = columns.map(column => {
-          if (column.type === 'researching') {
-            return {
-              ...column,
-              cards: [...column.cards, newGrant]
-            };
-          }
-          return column;
-        });
-        setColumns(updatedColumns);
-      }
-    }
   };
 
   return (

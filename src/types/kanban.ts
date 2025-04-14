@@ -9,22 +9,31 @@ export interface Metric {
 }
 
 export interface Project {
-  id: string;
+  id: number;
   title: string;
+  description: string | null;
+  budget: number;
+  raised: number;
+  image_url: string | null;
+  status: string;
+  created_at: string;
+  updated_at: string;
   metrics: Metric[];
 }
 
 export interface GrantCard {
-  id: string;
+  id: number;
   title: string;
   amount: number;
   deadline: string;
   status: GrantStatus;
   description: string;
   eligibility: string;
-  applicationDetails: string;
+  application_details: string;
   logo: string | null;
   projects?: Project[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Column {
@@ -35,20 +44,27 @@ export interface Column {
 }
 
 export interface DatabaseGrant {
-  id: string;
+  id: number;
   title: string;
   amount: number;
   status: string;
   deadline: string | null;
   description: string | null;
   eligibility: string | null;
-  applicationDetails: string | null;
+  application_details: string | null;
   logo: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: string;
+  updated_at: string;
   projects: {
-    id: string;
+    id: number;
     title: string;
+    description: string | null;
+    budget: number;
+    raised: number;
+    image_url: string | null;
+    status: string;
+    created_at: string;
+    updated_at: string;
     metrics: Array<{
       id: string;
       name: string;

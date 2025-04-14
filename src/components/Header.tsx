@@ -13,9 +13,9 @@ const Header = () => {
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const isActiveRoute = (route: string) => {
-    const currentPath = pathname ?? '';
-    if (route === '/') return currentPath === route;
-    return currentPath.startsWith(route);
+    if (!pathname) return false;
+    if (route === '/') return pathname === route;
+    return pathname.startsWith(route);
   };
 
   const navigation = [

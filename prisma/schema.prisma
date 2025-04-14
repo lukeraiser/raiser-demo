@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
+  relationMode = "prisma"
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  created_at  DateTime  @default(now())
+  title       String
+  description String?
+  budget      Float
+  raised      Float     @default(0)
+  image_url   String?
+  status      String    @default("active")
+  updated_at  DateTime  @updatedAt
+  grants      Grant[]   @relation("ProjectGrants")
+  metrics     Metric[]
+}
+
+model Grant {
+  id                  String    @id @default(uuid())
+  created_at         DateTime  @default(now())
+  title             String
+  amount            Float
+  description       String?
+  eligibility       String?
+  application_details String?
+  logo              String?
+  updated_at         DateTime  @updatedAt
+  status            String    // researching, eligible, applied, successful, unsuccessful
+  projects          Project[] @relation("ProjectGrants")
+  deadline          DateTime?
+}
+
+model Metric {
+  id          String    @id @default(uuid())
+  created_at  DateTime  @default(now())
+  name        String
+  value       Float
+  target      Float
+  unit        String
+  project     Project   @relation(fields: [project_id], references: [id])
+  project_id  String
+  updated_at  DateTime  @updatedAt
+}

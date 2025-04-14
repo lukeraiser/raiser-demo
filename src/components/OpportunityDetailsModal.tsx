@@ -60,30 +60,30 @@ const OpportunityDetailsModal = ({ opportunity, onClose }: OpportunityDetailsMod
         <div className="p-4 border-b">
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <p className="text-sm text-gray-600">Amount:</p>
-              <p className="font-semibold">{opportunity.amount}</p>
+              <div className="text-sm text-gray-600">Amount:</div>
+              <div className="font-semibold">{opportunity.amount}</div>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Status:</p>
+              <div className="text-sm text-gray-600">Status:</div>
               <span className={`inline-block px-3 py-1 rounded-full text-sm ${opportunity.statusColor}`}>
                 {opportunity.status}
               </span>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Project:</p>
-              <p className="font-semibold">{opportunity.project}</p>
+              <div className="text-sm text-gray-600">Project:</div>
+              <div className="font-semibold">{opportunity.project}</div>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Deadline:</p>
-              <p>{opportunity.deadline}</p>
+              <div className="text-sm text-gray-600">Deadline:</div>
+              <div>{opportunity.deadline}</div>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Owner:</p>
-              <p>{opportunity.owner}</p>
+              <div className="text-sm text-gray-600">Owner:</div>
+              <div>{opportunity.owner}</div>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Added:</p>
-              <p>{opportunity.addedDate} ({opportunity.daysAgo} days ago)</p>
+              <div className="text-sm text-gray-600">Added:</div>
+              <div>{opportunity.addedDate} ({opportunity.daysAgo} days ago)</div>
             </div>
           </div>
         </div>

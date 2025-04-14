@@ -57,7 +57,7 @@ export default function Card({ card, index, onUpdate, onStartApplication }: Card
 
   return (
     <>
-      <Draggable draggableId={card.id} index={index}>
+      <Draggable draggableId={String(card.id)} index={index}>
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
@@ -117,7 +117,7 @@ export default function Card({ card, index, onUpdate, onStartApplication }: Card
               </div>
 
               <div className="mt-2 text-sm text-gray-500">
-                {card.applicationDetails}
+                {card.application_details}
               </div>
             </div>
           </div>

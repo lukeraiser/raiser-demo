@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line, ComposedChart } from 'recharts';
 import { PieChart, Pie, Cell, Legend } from 'recharts';
 import Header from '@/components/Header';
@@ -106,10 +107,12 @@ export default function Dashboard() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">👋 Welcome to your dashboard</h1>
           <div>
-            <button className="px-6 py-2 bg-[#ff65c3] text-white rounded-full hover:bg-[#e55aaf] transition-colors flex items-center gap-2">
-              <span>🌐</span>
-              View Public Impact Page
-            </button>
+            <Link href="/ogarta">
+              <button className="px-6 py-2 bg-[#ff65c3] text-white rounded-full hover:bg-[#e55aaf] transition-colors flex items-center gap-2">
+                <span>🌐</span>
+                View Public Impact Page
+              </button>
+            </Link>
           </div>
         </div>
 
