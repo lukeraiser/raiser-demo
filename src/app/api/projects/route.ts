@@ -137,11 +137,8 @@ export async function PUT(request: Request) {
     if (!id) {
       return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
     }
-    const project = await prisma.project.update({
-      where: { id },
-      data,
-    });
-    return NextResponse.json(project);
+    // In demo mode, we just return a success response
+    return NextResponse.json({ success: true, message: 'Project updated successfully (Demo)' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
   }
@@ -153,10 +150,8 @@ export async function DELETE(request: Request) {
     if (!id) {
       return NextResponse.json({ error: 'Project ID is required' }, { status: 400 });
     }
-    await prisma.project.delete({
-      where: { id },
-    });
-    return NextResponse.json({ message: 'Project deleted successfully' });
+    // In demo mode, we just return a success response
+    return NextResponse.json({ success: true, message: 'Project deleted successfully (Demo)' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
   }
