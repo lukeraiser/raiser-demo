@@ -21,16 +21,18 @@ export function parseGrants(csvData: string): GrantCard[] {
     const funderName = values[0].trim();
     
     return {
-      id: `grant-${index}`,
+      id: index + 1,
       title: funderName,
       amount: parseFloat(values[1].trim()),
       deadline: values[2].trim(),
       status: 'researching' as GrantStatus,
       description: values[3].trim(),
       eligibility: values[3].trim(),
-      applicationDetails: values[4].trim(),
+      application_details: values[4].trim(),
       logo: LOGO_MAP[funderName] || null,
-      projects: []
+      projects: [],
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     };
   });
 } 
