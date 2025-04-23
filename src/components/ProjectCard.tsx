@@ -4,17 +4,27 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ProjectDetailsModal from './ProjectDetailsModal';
 
-interface ProjectCardProps {
+interface ProjectWithFunding {
   id: string;
-  name: string;
+  title: string;
   description: string;
   budget: number;
   raised: number;
   imageUrl: string;
-  onUpdate: (id: string, data: any) => void;
+  status: string;
 }
 
-export default function ProjectCard({ id, name, description, budget, raised, imageUrl, onUpdate }: ProjectCardProps) {
+interface ProjectCardProps {
+  id: string;
+  title: string;
+  description: string;
+  budget: number;
+  raised: number;
+  imageUrl: string;
+  onUpdate: (project: ProjectWithFunding) => void;
+}
+
+export default function ProjectCard({ id, title, description, budget, raised, imageUrl, onUpdate }: ProjectCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -28,11 +38,12 @@ export default function ProjectCard({ id, name, description, budget, raised, ima
           {!imageError ? (
             <Image
               src={imageUrl}
-              alt={name}
+              alt={title}
               fill
               className="object-cover"
               onError={() => setImageError(true)}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              loading="lazy"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -50,7 +61,7 @@ export default function ProjectCard({ id, name, description, budget, raised, ima
         </div>
 
         <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{name}</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
           <p className="text-gray-600 text-sm mb-4">{description}</p>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
@@ -77,11 +88,11 @@ export default function ProjectCard({ id, name, description, budget, raised, ima
 
       {isEditing && (
         <ProjectDetailsModal
-          project={{ id, name, description, budget, raised, imageUrl }}
+          project={{ id, title, description, budget, raised, imageUrl, status: 'active' }}
           onClose={() => setIsEditing(false)}
-          onUpdate={onUpdate}
+          onUpdate={(updatedProject) => onUpdate(updatedProject)}
         />
       )}
     </>
   );
-} 
+}

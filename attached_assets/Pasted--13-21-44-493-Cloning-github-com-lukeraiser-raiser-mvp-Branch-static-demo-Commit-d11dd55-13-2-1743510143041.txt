@@ -1,0 +1,47 @@
+[13:21:44.493] Cloning github.com/lukeraiser/raiser-mvp (Branch: static-demo, Commit: d11dd55)
+[13:21:45.350] Cloning completed: 857.000ms
+[13:21:46.971] Restored build cache from previous deployment (CrMXZxQ877YMG1NkSdNjvd4KTANF)
+[13:21:47.087] Running build in Washington, D.C., USA (East) – iad1
+[13:21:47.547] Running "vercel build"
+[13:21:47.949] Vercel CLI 41.4.1
+[13:21:48.256] Installing dependencies...
+[13:21:51.439] 
+[13:21:51.440] added 4 packages, and changed 1 package in 1s
+[13:21:51.440] 
+[13:21:51.440] 152 packages are looking for funding
+[13:21:51.441]   run `npm fund` for details
+[13:21:51.469] Detected Next.js version: 14.1.0
+[13:21:51.473] Running "npm run build"
+[13:21:51.583] 
+[13:21:51.583] > raiser-mvp@0.1.0 build
+[13:21:51.584] > next build
+[13:21:51.584] 
+[13:21:52.241]    ▲ Next.js 14.1.0
+[13:21:52.242] 
+[13:21:52.307]    Creating an optimized production build ...
+[13:21:58.889] Failed to compile.
+[13:21:58.889] 
+[13:21:58.889] ./src/app/dashboard/page.tsx
+[13:21:58.889] Error: 
+[13:21:58.889]   [31mx[0m Unexpected token `div`. Expected jsx identifier
+[13:21:58.889]     ,-[[36;1;4m/vercel/path0/src/app/dashboard/page.tsx[0m:30:1]
+[13:21:58.890]  [2m30[0m |   progress,
+[13:21:58.890]  [2m31[0m |   additionalSubtext
+[13:21:58.890]  [2m32[0m | }: MetricCardProps) => (
+[13:21:58.890]  [2m33[0m |   <div className="bg-white rounded-lg border border-gray-200 p-6">
+[13:21:58.890]     : [31;1m   ^^^[0m
+[13:21:58.890]  [2m34[0m |     <h3 className="text-sm font-semibold text-gray-700">{title}</h3>
+[13:21:58.890]  [2m35[0m |     <div className="mt-4">
+[13:21:58.890]  [2m36[0m |       <p className={`text-2xl font-bold ${valueColor}`}>{value}</p>
+[13:21:58.890]     `----
+[13:21:58.890] 
+[13:21:58.890] Caused by:
+[13:21:58.890]     Syntax Error
+[13:21:58.890] 
+[13:21:58.890] Import trace for requested module:
+[13:21:58.890] ./src/app/dashboard/page.tsx
+[13:21:58.890] 
+[13:21:58.901] 
+[13:21:58.902] > Build failed because of webpack errors
+[13:21:58.933] Error: Command "npm run build" exited with 1
+[13:21:59.278] 

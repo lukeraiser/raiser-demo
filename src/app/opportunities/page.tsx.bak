@@ -1,0 +1,349 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import Header from '@/components/Header';
+import KanbanColumn from '@/components/KanbanColumn';
+import OpportunityDetailsModal from '@/components/OpportunityDetailsModal';
+import LeftNavbar from '@/components/LeftNavbar';
+
+interface Opportunity {
+  id: string;
+  title: string;
+  amount: string;
+  status: string;
+  statusColor: string;
+  project: string;
+  deadline: string;
+  owner: string;
+  addedDate: string;
+  daysAgo: number;
+}
+
+interface SidebarItem {
+  id: string;
+  label: string;
+  icon: string;
+  active?: boolean;
+}
+
+const sidebarItems: SidebarItem[] = [
+  { id: 'pipeline', label: 'Pipeline', icon: '📊', active: true },
+  { id: 'funder-search', label: 'Funder Search', icon: '🔍' },
+  { id: 'reports', label: 'Reports & Analytics', icon: '📈' },
+  { id: 'templates', label: 'Application Templates', icon: '📄' },
+  { id: 'calendar', label: 'Funding Calendar', icon: '📅' },
+];
+
+const mockOpportunities: Opportunity[] = [
+  {
+    id: '1',
+    title: 'Garfield Weston Foundation',
+    amount: '£45,000',
+    status: 'Successful',
+    statusColor: 'bg-green-50',
+    project: 'Core Costs',
+    deadline: 'Completed',
+    owner: 'Sara',
+    addedDate: 'March 1, 2024',
+    daysAgo: 2,
+  },
+  {
+    id: '2',
+    title: 'Lloyds Bank Foundation',
+    amount: '£75,000',
+    status: 'Researching',
+    statusColor: 'bg-blue-50',
+    project: 'Core Costs',
+    deadline: 'June 15, 2024',
+    owner: 'Mike',
+    addedDate: 'February 25, 2024',
+    daysAgo: 5,
+  },
+  {
+    id: '3',
+    title: 'National Lottery Awards for All',
+    amount: '£10,000',
+    status: 'Successful',
+    statusColor: 'bg-green-50',
+    project: 'Community Sports Program',
+    deadline: 'Completed',
+    owner: 'John',
+    addedDate: 'February 22, 2024',
+    daysAgo: 8,
+  },
+  {
+    id: '4',
+    title: 'BBC Children in Need',
+    amount: '£30,000',
+    status: 'Applied',
+    statusColor: 'bg-purple-50',
+    project: 'Youth Club',
+    deadline: 'Interview: Apr 15',
+    owner: 'Sara',
+    addedDate: 'February 18, 2024',
+    daysAgo: 12,
+  },
+  {
+    id: '5',
+    title: 'Comic Relief',
+    amount: '£25,000',
+    status: 'Drafting',
+    statusColor: 'bg-yellow-50',
+    project: 'Youth Club',
+    deadline: 'May 1, 2024',
+    owner: 'Mike',
+    addedDate: 'February 12, 2024',
+    daysAgo: 18,
+  },
+  {
+    id: '6',
+    title: 'Arts Council Project Grant',
+    amount: '£15,000',
+    status: 'Eligible',
+    statusColor: 'bg-blue-50',
+    project: 'Youth Club',
+    deadline: 'June 30, 2024',
+    owner: 'Sara',
+    addedDate: 'February 8, 2024',
+    daysAgo: 22,
+  },
+  {
+    id: '7',
+    title: 'Esmee Fairbairn Foundation',
+    amount: '£50,000',
+    status: 'Researching',
+    statusColor: 'bg-blue-50',
+    project: 'Core Costs',
+    deadline: 'September 1, 2024',
+    owner: 'John',
+    addedDate: 'February 5, 2024',
+    daysAgo: 25,
+  },
+  {
+    id: '8',
+    title: 'Sport England Community Fund',
+    amount: '£20,000',
+    status: 'Drafting',
+    statusColor: 'bg-yellow-50',
+    project: 'Community Sports Program',
+    deadline: 'May 15, 2024',
+    owner: 'Mike',
+    addedDate: 'February 1, 2024',
+    daysAgo: 29,
+  },
+  {
+    id: '9',
+    title: 'The Robertson Trust',
+    amount: '£35,000',
+    status: 'Unsuccessful',
+    statusColor: 'bg-red-50',
+    project: 'Core Costs',
+    deadline: 'Reapply next year',
+    owner: 'Sara',
+    addedDate: 'January 25, 2024',
+    daysAgo: 36,
+  },
+  {
+    id: '10',
+    title: 'The Law Family Foundation',
+    amount: '£40,000',
+    status: 'Applied',
+    statusColor: 'bg-purple-50',
+    project: 'Community Sports Program',
+    deadline: 'Decision due: Apr 30',
+    owner: 'John',
+    addedDate: 'January 20, 2024',
+    daysAgo: 41,
+  },
+  {
+    id: '11',
+    title: 'The Gatsby Foundation',
+    amount: '£25,000',
+    status: 'Successful',
+    statusColor: 'bg-green-50',
+    project: 'Youth Club',
+    deadline: 'Completed',
+    owner: 'Mike',
+    addedDate: 'January 15, 2024',
+    daysAgo: 46,
+  },
+  {
+    id: '12',
+    title: 'National Lottery Reaching Communities',
+    amount: '£85,000',
+    status: 'Eligible',
+    statusColor: 'bg-blue-50',
+    project: 'Core Costs',
+    deadline: 'July 31, 2024',
+    owner: 'Sara',
+    addedDate: 'January 10, 2024',
+    daysAgo: 51,
+  }
+];
+
+const pipelineValue = "2.5M";
+
+export default function OpportunitiesPage() {
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [selectedOpportunityId, setSelectedOpportunityId] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState('pipeline');
+
+  useEffect(() => {
+    setOpportunities(mockOpportunities);
+  }, []);
+
+  const parseCurrency = (amount: string): number => {
+    return parseInt(amount.replace(/[£,]/g, ''), 10);
+  };
+
+  const formatCurrency = (amount: number): string => {
+    if (amount >= 1000000) {
+      return `£${(amount / 1000000).toFixed(1)}M`;
+    } else if (amount >= 1000) {
+      return `£${(amount / 1000).toFixed(0)}K`;
+    }
+    return `£${amount.toFixed(0)}`;
+  };
+
+  const getStatusColor = (status: string): string => {
+    const colors: { [key: string]: string } = {
+      'Researching': 'bg-blue-50',
+      'Eligible': 'bg-blue-50',
+      'Drafting': 'bg-yellow-50',
+      'Applied': 'bg-purple-50',
+      'Successful': 'bg-green-50',
+      'Unsuccessful': 'bg-red-50'
+    };
+    return colors[status] || 'bg-gray-50';
+  };
+
+  const calculatePipelineValues = () => {
+    const totalWon = opportunities
+      .filter(opp => opp.status === 'Successful')
+      .reduce((sum, opp) => sum + parseCurrency(opp.amount), 0);
+
+    const activePipelineStatuses = ['Researching', 'Eligible', 'Drafting', 'Applied'];
+    const totalPipeline = opportunities
+      .filter(opp => activePipelineStatuses.includes(opp.status))
+      .reduce((sum, opp) => sum + parseCurrency(opp.amount), 0);
+
+    const weightedPipeline = totalPipeline * 0.4;
+
+    return {
+      totalWon: formatCurrency(totalWon),
+      totalPipeline: formatCurrency(totalPipeline),
+      weightedPipeline: formatCurrency(weightedPipeline)
+    };
+  };
+
+  const handleDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+    if (!destination) return;
+
+    const draggedOpportunity = opportunities.find(opp => opp.id === result.draggableId);
+    if (!draggedOpportunity) return;
+
+    const newOpportunities = opportunities.filter(opp => opp.id !== result.draggableId);
+    const newStatus = destination.droppableId;
+    const updatedOpportunity = {
+      ...draggedOpportunity,
+      status: newStatus,
+      statusColor: getStatusColor(newStatus)
+    };
+
+    newOpportunities.splice(destination.index, 0, updatedOpportunity);
+    setOpportunities(newOpportunities);
+  };
+
+  const handleOpportunityClick = (id: string) => {
+    setSelectedOpportunityId(id);
+  };
+
+  const selectedOpportunity = opportunities.find(opp => opp.id === selectedOpportunityId);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="flex">
+        <LeftNavbar
+          title="Opportunities"
+          items={sidebarItems}
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+        />
+        <main className="ml-64 flex-1 p-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-2xl font-bold text-gray-900">Opportunities Pipeline</h1>
+              <p className="mt-1 text-sm text-gray-500">Manage and track your funding opportunities</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white rounded-lg shadow p-6">
+                <h3 className="text-sm font-medium text-gray-500">Total Won</h3>
+                <p className="mt-2 text-3xl font-bold text-gray-900">{calculatePipelineValues().totalWon}</p>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6">
+                <h3 className="text-sm font-medium text-gray-500">Total Pipeline</h3>
+                <p className="mt-2 text-3xl font-bold text-gray-900">{calculatePipelineValues().totalPipeline}</p>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6">
+                <h3 className="text-sm font-medium text-gray-500">Weighted Pipeline</h3>
+                <p className="mt-2 text-3xl font-bold text-gray-900">{calculatePipelineValues().weightedPipeline}</p>
+              </div>
+            </div>
+
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <div className="flex space-x-4 overflow-x-auto pb-4">
+                <KanbanColumn
+                  id="Researching"
+                  title="Researching"
+                  opportunities={opportunities.filter(opp => opp.status === 'Researching')}
+                  onOpportunityClick={handleOpportunityClick}
+                />
+                <KanbanColumn
+                  id="Eligible"
+                  title="Eligible"
+                  opportunities={opportunities.filter(opp => opp.status === 'Eligible')}
+                  onOpportunityClick={handleOpportunityClick}
+                />
+                <KanbanColumn
+                  id="Drafting"
+                  title="Drafting"
+                  opportunities={opportunities.filter(opp => opp.status === 'Drafting')}
+                  onOpportunityClick={handleOpportunityClick}
+                />
+                <KanbanColumn
+                  id="Applied"
+                  title="Applied"
+                  opportunities={opportunities.filter(opp => opp.status === 'Applied')}
+                  onOpportunityClick={handleOpportunityClick}
+                />
+                <KanbanColumn
+                  id="Successful"
+                  title="Successful"
+                  opportunities={opportunities.filter(opp => opp.status === 'Successful')}
+                  onOpportunityClick={handleOpportunityClick}
+                />
+                <KanbanColumn
+                  id="Unsuccessful"
+                  title="Unsuccessful"
+                  opportunities={opportunities.filter(opp => opp.status === 'Unsuccessful')}
+                  onOpportunityClick={handleOpportunityClick}
+                />
+              </div>
+            </DragDropContext>
+          </div>
+        </main>
+      </div>
+
+      {selectedOpportunityId && selectedOpportunity && (
+        <OpportunityDetailsModal
+          opportunity={selectedOpportunity}
+          onClose={() => setSelectedOpportunityId(null)}
+        />
+      )}
+    </div>
+  );
+} 

@@ -1,24 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Raiser MVP Demo
 
-## Getting Started
+This is a public demo of Raiser, a platform that helps small charities and non-profits manage their grant applications and funding opportunities.
 
-First, run the development server:
+## Demo Features
+
+- 📊 Interactive dashboard showing funding progress
+- 💸 Grant opportunity management with Kanban board
+- 🏢 Organization profile management
+- 🥊 Impact tracking and reporting
+- 📚 Learning resources for grant applications
+
+## Try the Demo
+
+You can try the live demo at: https://raiser-mvp-static-demo.vercel.app
+
+## Tech Stack
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Prisma
+- SQLite (for demo purposes)
+
+## Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Note
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This is a demo version of Raiser. For the full product, please visit [Raiser's website](https://raiser.com).
 
 ## Learn More
 

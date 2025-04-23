@@ -1,46 +1,38 @@
 'use client';
 
-import { Droppable, Draggable } from 'react-beautiful-dnd';
-import OpportunityCard from './OpportunityCard';
+import { Droppable, Draggable } from '@hello-pangea/dnd';
+
+interface Opportunity {
+  id: string;
+  title: string;
+  funder: string;
+  amount: number;
+  deadline: string;
+  status: string;
+  description: string;
+}
 
 interface KanbanColumnProps {
   id: string;
   title: string;
-  opportunities: Array<{
-    id: string;
-    title: string;
-    amount: string;
-    status: string;
-    statusColor: string;
-    project: string;
-    deadline: string;
-    owner: string;
-    addedDate: string;
-    daysAgo: number;
-  }>;
+  opportunities: Opportunity[];
   onOpportunityClick: (id: string) => void;
 }
 
-const KanbanColumn = ({ id, title, opportunities, onOpportunityClick }: KanbanColumnProps) => {
+export default function KanbanColumn({ id, title, opportunities, onOpportunityClick }: KanbanColumnProps) {
   return (
-    <div className="flex-shrink-0 w-80">
-      <div className="bg-white rounded-lg shadow-sm p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-700 text-sm">{title}</h2>
-          <span className="text-sm text-gray-500">{opportunities.length}</span>
-        </div>
-        <Droppable 
-          droppableId={id} 
-          isDropDisabled={false}
-          isCombineEnabled={false}
-        >
-          {(provided, snapshot) => (
+    <div className="w-80 flex-shrink-0">
+      <div className="bg-gray-50 rounded-lg p-4">
+        <h3 className="text-lg font-medium text-gray-900 mb-4">
+          {title} ({opportunities.length})
+        </h3>
+        
+        <Droppable droppableId={id}>
+          {(provided) => (
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`space-y-3 min-h-[150px] transition-colors duration-200 ${
-                snapshot.isDraggingOver ? 'bg-gray-50 rounded-lg p-2' : ''
-              }`}
+              className="space-y-3"
             >
               {opportunities.map((opportunity, index) => (
                 <Draggable
@@ -48,20 +40,24 @@ const KanbanColumn = ({ id, title, opportunities, onOpportunityClick }: KanbanCo
                   draggableId={opportunity.id}
                   index={index}
                 >
-                  {(provided, snapshot) => (
+                  {(provided) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={{
-                        ...provided.draggableProps.style,
-                        opacity: snapshot.isDragging ? 0.8 : 1,
-                      }}
+                      onClick={() => onOpportunityClick(opportunity.id)}
+                      className="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-md transition-shadow"
                     >
-                      <OpportunityCard
-                        {...opportunity}
-                        onOpportunityClick={onOpportunityClick}
-                      />
+                      <h4 className="font-medium text-gray-900">{opportunity.title}</h4>
+                      <p className="text-sm text-gray-500 mt-1">{opportunity.funder}</p>
+                      <div className="flex justify-between items-center mt-2">
+                        <span className="text-sm font-medium text-gray-900">
+                          £{opportunity.amount.toLocaleString()}
+                        </span>
+                        <span className="text-sm text-gray-500">
+                          Due {new Date(opportunity.deadline).toLocaleDateString()}
+                        </span>
+                      </div>
                     </div>
                   )}
                 </Draggable>
@@ -73,6 +69,4 @@ const KanbanColumn = ({ id, title, opportunities, onOpportunityClick }: KanbanCo
       </div>
     </div>
   );
-};
-
-export default KanbanColumn;
+}

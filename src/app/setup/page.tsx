@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
-import AIAssistant from '@/components/AIAssistant';
+
 import ProjectCard from '@/components/ProjectCard';
 import ImpactMetrics from '@/components/ImpactMetrics';
 
@@ -15,21 +15,20 @@ interface Version {
 
 interface Project {
   id: string;
-  name: string;
+  title: string;
   description: string;
   budget: number;
   raised: number;
   imageUrl: string;
+  status: string;
 }
 
-interface ImpactMetric {
+interface Metric {
   id: string;
-  title: string;
-  description: string;
+  name: string;
   currentValue: number;
   targetValue: number;
   unit: string;
-  category: string;
 }
 
 const sidebarItems = [
@@ -52,7 +51,7 @@ export default function Setup() {
   const [missionVersions, setMissionVersions] = useState<Version[]>([
     {
       id: '1',
-      content: 'To empower communities through sustainable development and education.',
+      content: 'Small But Mighty empowers the citizens of Smallville to be everyday heroes in their community. Through grassroots initiatives and local journalism mentorship supported by our patron Clark Kent of the Daily Planet, we foster strength, courage, and truth in our next generation of community leaders.',
       timestamp: new Date(),
       isPublished: true
     }
@@ -60,7 +59,7 @@ export default function Setup() {
   const [visionVersions, setVisionVersions] = useState<Version[]>([
     {
       id: '1',
-      content: 'A world where every community thrives through education and opportunity.',
+      content: 'We envision Smallville as a beacon of hope where every citizen, no matter how ordinary they may seem, has the power to make an extraordinary difference. Just as our town has shown that heroes can come from anywhere, we believe in nurturing the superhuman potential within every community member.',
       timestamp: new Date(),
       isPublished: true
     }
@@ -68,75 +67,64 @@ export default function Setup() {
   const [projects, setProjects] = useState<Project[]>([
     {
       id: '1',
-      name: 'Core Costs',
+      title: 'Core Costs',
       description: 'Essential operational costs to keep our organization running effectively.',
       budget: 40000,
       raised: 25000,
-      imageUrl: '/images/core-costs.jpg'
+      imageUrl: '/images/core-costs.jpg',
+      status: 'active'
     },
     {
       id: '2',
-      name: 'Youth Club',
+      title: 'Youth Club',
       description: 'Supporting young people through engaging activities and mentorship.',
       budget: 25000,
       raised: 12000,
-      imageUrl: '/images/youth-club.jpg'
+      imageUrl: '/images/youth-club.jpg',
+      status: 'active'
     },
     {
       id: '3',
-      name: 'Community Sports Program',
+      title: 'Community Sports Program',
       description: 'Promoting health and community engagement through sports activities.',
       budget: 33000,
       raised: 8000,
-      imageUrl: '/images/sports.jpg'
+      imageUrl: '/images/sports.jpg',
+      status: 'active'
     }
   ]);
-  const [impactMetrics, setImpactMetrics] = useState<ImpactMetric[]>([
+  const [impactMetrics, setImpactMetrics] = useState<Metric[]>([
     {
       id: '1',
-      title: 'People Supported',
-      description: 'Number of individuals who have received support through our programs',
+      name: 'People Supported',
       currentValue: 150,
       targetValue: 200,
-      unit: 'people',
-      category: 'Community Impact'
+      unit: 'individuals'
     },
     {
       id: '2',
-      title: 'Volunteer Hours',
-      description: 'Total hours contributed by volunteers to our community projects',
+      name: 'Training Hours',
       currentValue: 2500,
       targetValue: 3000,
-      unit: 'hours',
-      category: 'Community Impact'
+      unit: 'hours'
     },
     {
       id: '3',
-      title: 'Funds Raised',
-      description: 'Total amount raised for community projects and initiatives',
+      name: 'Funding Secured',
       currentValue: 75000,
       targetValue: 100000,
-      unit: '£',
-      category: 'Financial Impact'
+      unit: 'GBP'
     },
     {
       id: '4',
-      title: 'Program Success Rate',
-      description: 'Percentage of program participants who achieve their goals',
+      name: 'Satisfaction Rate',
       currentValue: 85,
       targetValue: 90,
-      unit: '%',
-      category: 'Program Impact'
+      unit: '%'
     }
   ]);
 
-  const handleAISuggestion = (suggestion: string) => {
-    if (activeSection === 'mission') {
-      setMissionStatement(suggestion);
-    } else {
-      setVisionStatement(suggestion);
-    }
-  };
+  
 
   const saveVersion = (type: 'mission' | 'vision', content: string) => {
     const newVersion: Version = {
@@ -171,10 +159,12 @@ export default function Setup() {
     }
   };
 
-  const handleProjectUpdate = (id: string, data: any) => {
-    setProjects(prev => prev.map(project => 
-      project.id === id ? { ...project, ...data } : project
-    ));
+  const handleProjectUpdate = (updatedProject: Project) => {
+    setProjects(prevProjects =>
+      prevProjects.map(project =>
+        project.id === updatedProject.id ? { ...project, ...updatedProject } : project
+      )
+    );
   };
 
   const handleImpactMetricUpdate = (id: string, data: any) => {
@@ -393,9 +383,7 @@ export default function Setup() {
                 </div>
               </div>
 
-              <div className="h-[600px]">
-                <AIAssistant onSuggestionSelect={handleAISuggestion} />
-              </div>
+              
             </div>
           </>
         );
@@ -449,42 +437,40 @@ export default function Setup() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <div className="p-8">
-        {/* Page Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Public Profile Setup</h1>
-          <button className="px-6 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600">
-            Preview Public Page
-          </button>
-        </div>
+      <main className="py-10 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-2xl font-bold text-gray-900">Public Profile Setup</h1>
+            <button className="px-6 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600">
+              Preview Public Page
+            </button>
+          </div>
 
-        {/* Main Content */}
-        <div className="flex gap-8">
-          {/* Sidebar */}
-          <div className="w-56 flex-shrink-0">
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-              {sidebarItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveSection(item.id)}
-                  className={`w-full px-4 py-3 text-left text-sm ${
-                    activeSection === item.id
-                      ? 'bg-pink-500 text-white font-semibold'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+          <div className="flex gap-8">
+            <div className="w-56 flex-shrink-0">
+              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                {sidebarItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveSection(item.id)}
+                    className={`w-full px-4 py-3 text-left text-sm ${
+                      activeSection === item.id
+                        ? 'bg-pink-500 text-white font-semibold'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex-grow bg-white rounded-lg border border-gray-200 p-8">
+              {renderContent()}
             </div>
           </div>
-
-          {/* Main Content Area */}
-          <div className="flex-grow bg-white rounded-lg border border-gray-200 p-8">
-            {renderContent()}
-          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
-} 
+}
